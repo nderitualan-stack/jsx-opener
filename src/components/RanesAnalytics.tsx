@@ -758,44 +758,55 @@ function DealsView(){
    RANES AI
 ════════════════════════════════════════════════════════════ */
 function AIView(){
-  const [msgs,setMsgs]=useState([{role:"assistant",content:"**Hi, I'm Ranes AI** — Ranes Analytics' investment intelligence assistant.\n\nI now cover the **full 2019–Q1 2026 history** of African startup funding. Ask me anything:\n• Funding trends from 2019 to 2026\n• Why 2022 was the peak and 2023 crashed\n• The 2025 rebound — what drove it?\n• Active fundraises right now\n• Country or sector deep-dives across any year\n• IRR benchmarks and investor activity"}]);
+  const [msgs,setMsgs]=useState<ChatMessage[]>([{role:"assistant",content:"**Hi, I'm Ranes AI** — Ranes Analytics' investment intelligence assistant.\n\nI'm powered by a live database covering the **full 2019–Q1 2026 history** of African startup funding. My responses are grounded in verified deal data, not generic LLM knowledge.\n\nAsk me anything:\n- Funding trends from 2019 to 2026\n- Why 2022 was the peak and 2023 crashed\n- The 2025 rebound — what drove it?\n- Active fundraises right now\n- Country or sector deep-dives across any year\n- Compare sectors, investors, or deal types"}]);
   const [input,setInput]=useState("");
   const [loading,setLoading]=useState(false);
   const [sysNote,setSysNote]=useState("");
-  const btm=useRef(null);const inp=useRef(null);
+  const btm=useRef<HTMLDivElement>(null);const inp=useRef<HTMLInputElement>(null);
   useEffect(()=>{btm.current?.scrollIntoView({behavior:"smooth"});},[msgs,loading,sysNote]);
-  const fmtTime=ts=>{try{return new Date(ts*1000).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});}catch{return "soon";}};
-  const send=async()=>{
+
+  const send=useCallback(async()=>{
     const q=input.trim();if(!q||loading)return;
     setSysNote("");
-    const history=[...msgs,{role:"user",content:q}];
+    const userMsg:ChatMessage={role:"user",content:q};
+    const history=[...msgs,userMsg];
     setMsgs(history);setInput("");setLoading(true);
-    try{
-      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:900,system:AI_SYS,messages:history.map(m=>({role:m.role,content:m.content}))})});
-      let data;try{data=await res.json();}catch{throw new Error("Response parse error.");}
-      if(data?.type==="exceeded_limit"||data?.error?.type==="exceeded_limit"){
-        const rt=data?.resetsAt?`Resets at ${fmtTime(data.resetsAt)}`:"Resets soon";
-        setSysNote(`⏱️ Rate limit — ${rt}`);
-        setMsgs(p=>[...p,{role:"assistant",content:`Rate limited (${rt}). From the Ranes Analytics database:\n\n${FALLBACK(q)}`}]);
-        setLoading(false);return;
-      }
-      if(!res.ok){const em=data?.error?.message||`Error ${res.status}`;setMsgs(p=>[...p,{role:"assistant",content:`⚠️ **${em}**\n\n${FALLBACK(q)}`}]);setLoading(false);return;}
-      const text=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
-      setMsgs(p=>[...p,{role:"assistant",content:text||"Please try rephrasing."}]);
-    }catch{setMsgs(p=>[...p,{role:"assistant",content:`⚠️ Connection issue.\n\n${FALLBACK(q)}`}]);}
-    setLoading(false);setTimeout(()=>inp.current?.focus(),80);
-  };
-  const md=t=>t.replace(/\*\*(.*?)\*\*/g,`<strong style="color:${TX}">$1</strong>`).replace(/•\s/g,`<span style="color:${M};font-weight:700">• </span>`).replace(/\n/g,"<br/>");
-  const SUGG=["Show me the 2019–2026 trend","Why did 2022 hit $5 billion?","What caused the 2023 funding winter?","How did 2025 recover so strongly?","Active fundraises right now?","Best year for Kenyan startups?"];
+
+    let assistantSoFar="";
+    const upsertAssistant=(chunk:string)=>{
+      assistantSoFar+=chunk;
+      const content=assistantSoFar;
+      setMsgs(prev=>{
+        const last=prev[prev.length-1];
+        if(last?.role==="assistant"&&prev.length>history.length){
+          return prev.map((m,i)=>i===prev.length-1?{...m,content}:m);
+        }
+        return [...prev,{role:"assistant",content}];
+      });
+    };
+
+    await streamChat({
+      messages:history,
+      onDelta:(chunk)=>upsertAssistant(chunk),
+      onDone:()=>{setLoading(false);setTimeout(()=>inp.current?.focus(),80);},
+      onError:(error)=>{
+        setSysNote(`⚠️ ${error}`);
+        setMsgs(p=>[...p,{role:"assistant",content:`I encountered an issue: **${error}**\n\nPlease try again in a moment. In the meantime, explore the Dashboard and Deal Database for the latest data.`}]);
+        setLoading(false);
+      },
+    });
+  },[input,loading,msgs]);
+
+  const SUGG=["What sectors attracted the most VC funding in Kenya in 2025?","Compare fintech vs energy deal flow","List active Series A investors in East Africa","What are the top funded sectors this quarter?","How did 2025 compare to 2022?","Show me the debt vs equity trend"];
   return(
     <div className="fade-up" style={{display:"flex",flexDirection:"column",height:"calc(100vh - 170px)",minHeight:520,maxHeight:800}}>
       <div style={{marginBottom:14,flexShrink:0,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <div><h2 className="sh">Ranes AI</h2><p className="sh-sub">Powered by Claude · Full 2019–Q1 2026 dataset · Smart fallbacks always available</p></div>
-        <div style={{display:"flex",alignItems:"center",gap:8}}><span className="ldot"/><span style={{fontSize:11,color:GD,fontWeight:700,fontFamily:AN}}>LIVE</span><span className="badge bgn">✓ 7 Years Data</span></div>
+        <div><h2 className="sh">Ranes AI</h2><p className="sh-sub">Powered by Lovable AI · RAG from live database · Streaming responses</p></div>
+        <div style={{display:"flex",alignItems:"center",gap:8}}><span className="ldot"/><span style={{fontSize:11,color:GD,fontWeight:700,fontFamily:AN}}>LIVE</span><span className="badge bgn">✓ Database-Grounded</span></div>
       </div>
       <div className="chat-win">
-        {msgs.map((m,i)=>(<div key={i} className={m.role==="user"?"row-user":"row-ai"}>{m.role==="assistant"&&<div className="av-ai"><HawkSVG size={20}/></div>}<div className={m.role==="user"?"bub-user":"bub-ai"}>{m.role==="assistant"&&<div className="ai-lbl">Ranes AI</div>}<div dangerouslySetInnerHTML={{__html:md(m.content)}}/></div>{m.role==="user"&&<div className="av-user">U</div>}</div>))}
-        {loading&&(<div className="row-ai"><div className="av-ai"><HawkSVG size={20}/></div><div className="bub-ai"><div className="ai-lbl">Ranes AI</div><div className="dots"><div className="dot"/><div className="dot"/><div className="dot"/></div></div></div>)}
+        {msgs.map((m,i)=>(<div key={i} className={m.role==="user"?"row-user":"row-ai"}>{m.role==="assistant"&&<div className="av-ai"><HawkSVG size={20}/></div>}<div className={m.role==="user"?"bub-user":"bub-ai"}>{m.role==="assistant"&&<div className="ai-lbl">Ranes AI</div>}<div style={{fontFamily:AN,fontSize:13,lineHeight:1.72}}>{m.role==="assistant"?<ReactMarkdown components={{strong:({children})=><strong style={{color:TX}}>{children}</strong>,a:({href,children})=><a href={href} target="_blank" rel="noreferrer" className="ext">{children}</a>,li:({children})=><li style={{marginLeft:16,marginBottom:4}}>{children}</li>}}>{m.content}</ReactMarkdown>:m.content}</div></div>{m.role==="user"&&<div className="av-user">U</div>}</div>))}
+        {loading&&msgs[msgs.length-1]?.role!=="assistant"&&(<div className="row-ai"><div className="av-ai"><HawkSVG size={20}/></div><div className="bub-ai"><div className="ai-lbl">Ranes AI</div><div className="dots"><div className="dot"/><div className="dot"/><div className="dot"/></div></div></div>)}
         {sysNote&&<div className="row-sys"><div className="bub-sys">{sysNote}</div></div>}
         <div ref={btm} style={{height:1}}/>
       </div>
