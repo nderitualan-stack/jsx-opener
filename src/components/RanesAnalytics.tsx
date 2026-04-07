@@ -1,4 +1,6 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import ReactMarkdown from "react-markdown";
+import { streamChat, type ChatMessage } from "@/lib/chatStream";
 import {
   ComposedChart, BarChart, Bar, AreaChart, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
