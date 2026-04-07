@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import { streamChat, type ChatMessage } from "@/lib/chatStream";
+import ranesLogo from "@/assets/ranes-logo.png";
 import {
   ComposedChart, BarChart, Bar, AreaChart, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
