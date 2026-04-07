@@ -17,41 +17,17 @@ const TX="#1A2B40",TX2="#4A5E78",TX3="#8A9BB8";
 const M_BG="#FBF0F3",N_BG="#EEF3FC";
 const AN="'Arial Narrow',Arial,sans-serif";
 
-/* ── EXACT LOGO SVG ─────────────────────── */
-function HawkSVG({size=48}){
+/* ── LOGO IMAGE ──────────────────────────── */
+function LogoImg({size=48,onDark=false}:{size?:number,onDark?:boolean}){
   return(
-    <svg width={size} height={Math.round(size*0.88)} viewBox="0 0 260 228" fill="none">
-      <polygon points="92,72 96,28 248,36 220,70 152,60" fill={N3}/>
-      <polygon points="96,28 248,36 240,24 110,18" fill={N4} opacity="0.5"/>
-      <polygon points="58,66 92,52 96,76 78,88 62,80" fill={N2}/>
-      <polygon points="92,52 96,76 100,62 98,48" fill={N3} opacity="0.7"/>
-      <polygon points="44,72 58,66 62,80 48,84" fill={N3}/>
-      <polygon points="36,88 52,82 56,94 40,100" fill={N4}/>
-      <polygon points="28,102 44,96 46,108 30,114" fill={N5}/>
-      <polygon points="34,116 48,110 50,122 36,128" fill={N4} opacity="0.8"/>
-      <circle cx="112" cy="88" r="8" fill={N3}/>
-      <polygon points="112,76 200,72 220,92 186,104 112,100" fill={M2}/>
-      <polygon points="112,76 200,72 192,64 120,68" fill={M} opacity="0.5"/>
-      <polygon points="156,100 206,90 212,112 162,118" fill={M3}/>
-      <polygon points="206,90 212,112 216,100 210,84" fill={M4} opacity="0.6"/>
-      <polygon points="112,100 148,100 138,148 106,148" fill={M}/>
-      <polygon points="112,100 148,100 142,110 118,110" fill={M2} opacity="0.5"/>
-      <polygon points="148,108 190,108 178,152 144,148" fill={M4}/>
-      <polygon points="148,108 190,108 184,98 154,98" fill={M3} opacity="0.4"/>
-      <polygon points="96,104 120,104 114,156 90,152" fill={M5}/>
-      <circle cx="43" cy="70" r="4" fill={GD2} opacity="0.9"/>
-      <circle cx="44" cy="69" r="1.5" fill={N}/>
-    </svg>
+    <img src={ranesLogo} alt="Ranes Analytics" width={size} height={size}
+      style={{objectFit:"contain",filter:onDark?"brightness(1.8) contrast(1.1)":"none"}}/>
   );
 }
-function LogoLockup({onClick,onDark=false}){
+function LogoLockup({onClick,onDark=false}:{onClick:()=>void,onDark?:boolean}){
   return(
     <div onClick={onClick} style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer",flexShrink:0}}>
-      <HawkSVG size={46}/>
-      <div>
-        <div style={{fontFamily:AN,fontSize:22,fontWeight:700,letterSpacing:0.5,color:onDark?WH:N2,lineHeight:1}}>Ranes</div>
-        <div style={{fontFamily:AN,fontSize:10,fontWeight:700,letterSpacing:3.5,color:onDark?M3:M,lineHeight:1.2,textTransform:"uppercase"}}>Analytics</div>
-      </div>
+      <LogoImg size={46} onDark={onDark}/>
     </div>
   );
 }
