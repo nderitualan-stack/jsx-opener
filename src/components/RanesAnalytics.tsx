@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import {
   ComposedChart, BarChart, Bar, AreaChart, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  Line, PieChart, Pie, Cell, Legend, LineChart
+  Line
 } from "recharts";
 
 /* ── PALETTE ─────────────────────────────── */
@@ -311,7 +311,7 @@ const CSS=`
 `;
 
 /* ── HELPERS ──────────────────────────────── */
-const CT=({active,payload,label})=>{
+const CT=({active,payload,label}: any)=>{
   if(!active||!payload?.length)return null;
   return(<div style={{background:WH,border:`1px solid ${BRD}`,borderRadius:8,padding:"10px 14px",fontSize:12,fontFamily:AN,boxShadow:`0 4px 12px ${TX}18`}}><p style={{color:TX2,fontSize:11,marginBottom:5}}>{label}</p>{payload.map((p,i)=>(<p key={i} style={{color:p.color||TX,fontWeight:700,fontFamily:AN}}>{["equity","debt","amount","total"].includes(p.name)?`$${p.value}M`:p.value}<span style={{color:TX2,fontWeight:400,marginLeft:5}}>{p.name}</span></p>))}</div>);
 };
@@ -780,7 +780,7 @@ function AIView(){
       if(!res.ok){const em=data?.error?.message||`Error ${res.status}`;setMsgs(p=>[...p,{role:"assistant",content:`⚠️ **${em}**\n\n${FALLBACK(q)}`}]);setLoading(false);return;}
       const text=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
       setMsgs(p=>[...p,{role:"assistant",content:text||"Please try rephrasing."}]);
-    }catch(e){setMsgs(p=>[...p,{role:"assistant",content:`⚠️ Connection issue.\n\n${FALLBACK(q)}`}]);}
+    }catch{setMsgs(p=>[...p,{role:"assistant",content:`⚠️ Connection issue.\n\n${FALLBACK(q)}`}]);}
     setLoading(false);setTimeout(()=>inp.current?.focus(),80);
   };
   const md=t=>t.replace(/\*\*(.*?)\*\*/g,`<strong style="color:${TX}">$1</strong>`).replace(/•\s/g,`<span style="color:${M};font-weight:700">• </span>`).replace(/\n/g,"<br/>");
@@ -926,7 +926,7 @@ function ActiveDealsView(){
             </div>
 
             <div style={{display:"flex",justifyContent:"flex-end"}}>
-              <div style={{fontSize:11,color:TX3,fontFamily:AN}}>Source: {d.source||"LaunchBase Africa / TechCabal Q1 2026"}</div>
+              <div style={{fontSize:11,color:TX3,fontFamily:AN}}>Source: {"LaunchBase Africa / TechCabal Q1 2026"}</div>
             </div>
           </div>
         ))}
