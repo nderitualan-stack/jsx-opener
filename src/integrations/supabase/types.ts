@@ -14,7 +14,129 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      active_deals: {
+        Row: {
+          city: string | null
+          company: string
+          confidence: number | null
+          created_at: string
+          description: string | null
+          flag: string | null
+          id: string
+          investors: string | null
+          range: string | null
+          sector: string
+          stage: string | null
+          status: string | null
+        }
+        Insert: {
+          city?: string | null
+          company: string
+          confidence?: number | null
+          created_at?: string
+          description?: string | null
+          flag?: string | null
+          id?: string
+          investors?: string | null
+          range?: string | null
+          sector: string
+          stage?: string | null
+          status?: string | null
+        }
+        Update: {
+          city?: string | null
+          company?: string
+          confidence?: number | null
+          created_at?: string
+          description?: string | null
+          flag?: string | null
+          id?: string
+          investors?: string | null
+          range?: string | null
+          sector?: string
+          stage?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
+      deals: {
+        Row: {
+          amount: number
+          company: string
+          country: string
+          created_at: string
+          flag: string | null
+          id: string
+          investors: string | null
+          quarter: string | null
+          round: string | null
+          sector: string
+          type: string
+          url: string | null
+          year: number
+        }
+        Insert: {
+          amount: number
+          company: string
+          country: string
+          created_at?: string
+          flag?: string | null
+          id?: string
+          investors?: string | null
+          quarter?: string | null
+          round?: string | null
+          sector: string
+          type: string
+          url?: string | null
+          year: number
+        }
+        Update: {
+          amount?: number
+          company?: string
+          country?: string
+          created_at?: string
+          flag?: string | null
+          id?: string
+          investors?: string | null
+          quarter?: string | null
+          round?: string | null
+          sector?: string
+          type?: string
+          url?: string | null
+          year?: number
+        }
+        Relationships: []
+      }
+      news: {
+        Row: {
+          created_at: string
+          date: string | null
+          id: string
+          sentiment: string | null
+          source: string | null
+          title: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          date?: string | null
+          id?: string
+          sentiment?: string | null
+          source?: string | null
+          title: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          date?: string | null
+          id?: string
+          sentiment?: string | null
+          source?: string | null
+          title?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
