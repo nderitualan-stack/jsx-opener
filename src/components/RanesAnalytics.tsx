@@ -898,7 +898,7 @@ function ActiveDealsView(){
 
       {/* Disclaimer */}
       <div style={{background:M_BG,border:`1px solid ${M}33`,borderRadius:8,padding:"12px 16px",fontSize:12,color:TX2,lineHeight:1.7,fontFamily:AN}}>
-        <strong style={{color:M}}>⚠️ Investor Note:</strong> Active deal intelligence is sourced from verified public announcements, investor reports (LaunchBase Africa Q1 2026, TechCabal Insights, Innovation Village), and corroborated signals. Confidence scores reflect multi-source verification. Always conduct independent due diligence. <strong style={{color:TX}}>This is not investment advice.</strong>
+        <strong style={{color:M}}>Investor Note:</strong> Active deal intelligence is sourced from verified public announcements, investor reports (LaunchBase Africa Q1 2026, TechCabal Insights, Innovation Village) and corroborated signals. Confidence scores reflect multi-source verification. Always conduct independent due diligence. <strong style={{color:TX}}>This is not investment advice.</strong>
       </div>
 
       {/* Status filter */}
@@ -980,7 +980,7 @@ function ActiveDealsView(){
 
       {/* Founder note — no button, just informational */}
       <div style={{background:N_BG,border:`1px solid ${N4}33`,borderRadius:8,padding:"16px 20px"}}>
-        <div style={{fontFamily:AN,fontSize:13,fontWeight:700,color:TX,marginBottom:3}}>📋 For Founders</div>
+        <div style={{fontFamily:AN,fontSize:13,fontWeight:700,color:TX,marginBottom:3}}>For Founders</div>
         <p style={{fontSize:13,color:TX2,fontFamily:AN,lineHeight:1.65}}>Deal intelligence on this page is sourced from verified public announcements. Use the contact form below to reach the Ranes Analytics team for further enquiries.</p>
       </div>
     </div>
