@@ -1244,18 +1244,18 @@ function ContactBox(){
   return(
     <div style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:10,padding:"24px 26px",marginBottom:6}}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
-        <span style={{fontSize:20}}>✉️</span>
+        <div style={{width:28,height:28,borderRadius:6,background:M,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:WH,fontSize:14,fontWeight:700}}>✉</span></div>
         <div>
           <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:WH}}>Get in Touch</div>
-          <div style={{fontFamily:AN,fontSize:12,color:"rgba(255,255,255,0.45)"}}>Questions, partnerships, feedback — we'd love to hear from you</div>
+          <div style={{fontFamily:AN,fontSize:12,color:"rgba(255,255,255,0.45)"}}>Questions, partnerships, feedback: we would love to hear from you</div>
         </div>
       </div>
       <div style={{height:1,background:"rgba(255,255,255,0.1)",margin:"14px 0"}}/>
       {sent?(
         <div style={{textAlign:"center",padding:"20px 0"}}>
-          <div style={{fontSize:28,marginBottom:8}}>✅</div>
-          <div style={{fontFamily:AN,fontSize:15,fontWeight:700,color:WH,marginBottom:4}}>Message opened in your mail client!</div>
-          <div style={{fontFamily:AN,fontSize:12,color:"rgba(255,255,255,0.45)"}}>Your message has been prepared — just hit send in your mail app.</div>
+          <div style={{fontSize:28,marginBottom:8,color:M}}>◈</div>
+          <div style={{fontFamily:AN,fontSize:15,fontWeight:700,color:WH,marginBottom:4}}>Message sent successfully!</div>
+          <div style={{fontFamily:AN,fontSize:12,color:"rgba(255,255,255,0.45)"}}>Your message has been prepared. Just hit send in your mail app to complete.</div>
           <button className="btn bo" style={{marginTop:14,fontSize:12}} onClick={()=>{setSent(false);setName("");setEmail("");setMsg("");}}>Send another</button>
         </div>
       ):(
