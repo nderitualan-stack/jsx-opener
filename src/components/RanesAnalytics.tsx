@@ -1373,7 +1373,7 @@ export default function RanesAnalytics(){
               {[["2022 (Peak)","$5.0B"],["2021","$4.3B"],["2025","$3.2B"],["2019","$2.1B"],["2023","$2.9B"],["2024","$2.2B"],["Q1 2026","$0.71B"],["2020 (COVID)","$0.9B"]].map(([l,v])=>(<div key={l} style={{padding:"3px 14px",display:"flex",justifyContent:"space-between"}}><span style={{fontSize:10,color:"rgba(255,255,255,0.38)",fontFamily:AN}}>{l}</span><span style={{fontSize:10,fontWeight:700,color:M3,fontFamily:AN}}>{v}</span></div>))}
               <div className="divider"/>
               <div style={{padding:"12px",background:`${M}26`,borderRadius:7,border:`1px solid ${M}38`,margin:"4px 2px"}}>
-                <p style={{fontSize:12,fontWeight:700,color:M3,marginBottom:4,fontFamily:AN}}>⚡ Ask Ranes AI</p>
+                <p style={{fontSize:12,fontWeight:700,color:M3,marginBottom:4,fontFamily:AN}}>Ask Ranes AI</p>
                 <p style={{fontSize:11,color:"rgba(255,255,255,0.38)",lineHeight:1.5,marginBottom:8,fontFamily:AN}}>Query 7 years of African investment data</p>
                 <button className="btn bp" style={{width:"100%",justifyContent:"center",fontSize:11,padding:"7px"}} onClick={()=>setView("ai")}>Open Ranes AI</button>
               </div>
