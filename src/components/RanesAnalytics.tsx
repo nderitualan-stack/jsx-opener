@@ -1293,10 +1293,10 @@ export default function RanesAnalytics(){
 
   const SERVICES=[
     {id:"dashboard",label:"Dashboard",icon:"◈"},
-    {id:"active",label:"Active Deals",icon:"🔴",badge:true},
-    {id:"deals",label:"Deal Database",icon:"✅"},
+    {id:"active",label:"Active Deals",icon:"◉",badge:true},
+    {id:"deals",label:"Deal Database",icon:"◇"},
     {id:"news",label:"News",icon:"◫"},
-    {id:"ai",label:"Ranes AI",icon:"⚡"},
+    {id:"ai",label:"Ranes AI",icon:"▶"},
   ];
   const COMP={home:()=><PanAfricanView goToService={goToService}/>,dashboard:DashboardView,active:ActiveDealsView,deals:DealsView,news:NewsView,ai:AIView};
   const Active=COMP[view]||COMP.home;
