@@ -495,17 +495,16 @@ function DashboardView(){
       {/* ── SUMMARY KPIs for selected range ── */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:13}}>
         {[
-          ["📅","2019 – Q1 2026","Ranes Analytics covers","Full 7-year dataset","2019 to Apr 2026"],
-          ["💰",`$${(totalInRange/1000).toFixed(1)}B`,"Total in Range",`${yearRange[0]}–${yearRange[1]}`,`${annualFiltered.length} year(s) selected`],
-          ["🏆",peakYear?.year||"2022","Peak Year",`$${peakYear?.total||5000}M raised`,"Africa: The Big Deal"],
-          ["📊","$5.0B","All-Time Peak","2022 · 1,034 deals","AVCA / Africa:TBD"],
-          ["⬇","$0.9B","Lowest (COVID)","2020 · 359 deals","Africa: The Big Deal"],
-          ["📈","$3.2B","2025 Rebound","+40% YoY recovery","Technext24 / TBD"],
-          ["🔢","6,000+","Total Deals 2019–26","Across 54 countries","Ranes Analytics"],
-          ["🦄","16+","Unicorns Created","2019–2025","Partech / Disrupt Africa"],
+          ["◈",`$${(totalInRange/1000).toFixed(1)}B`,"Total in Range",`${yearRange[0]}–${yearRange[1]}`,`${annualFiltered.length} year(s) selected`],
+          ["◆",peakYear?.year||"2022","Peak Year",`$${peakYear?.total||5000}M raised`,"Africa: The Big Deal"],
+          ["▲","$5.0B","All-Time Peak","2022, 1,034 deals","AVCA / Africa:TBD"],
+          ["▼","$0.9B","Lowest (COVID)","2020, 359 deals","Africa: The Big Deal"],
+          ["◉","$3.2B","2025 Rebound","+40% YoY recovery","Technext24 / TBD"],
+          ["■","6,000+","Total Deals 2019–26","Across 54 countries","Ranes Analytics"],
+          ["●","16+","Unicorns Created","2019–2025","Partech / Disrupt Africa"],
         ].map(([icon,val,label,sub,src],i)=>(
           <div key={i} className="card" style={{padding:"15px"}}>
-            <div style={{fontSize:18,marginBottom:6}}>{icon}</div>
+            <div style={{fontSize:18,marginBottom:6,color:M,fontWeight:700}}>{icon}</div>
             <div className="sv" style={{fontSize:22}}>{val}</div>
             <div style={{fontSize:11,fontWeight:700,color:TX,margin:"3px 0 1px",fontFamily:AN,textTransform:"uppercase",letterSpacing:0.4}}>{label}</div>
             <div style={{fontSize:11,color:TX2,fontFamily:AN}}>{sub}</div>
