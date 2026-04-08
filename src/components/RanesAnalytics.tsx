@@ -701,9 +701,17 @@ function DealsView(){
 
   return(
     <div className="fade-up" style={{display:"flex",flexDirection:"column",gap:18}}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end"}}>
-        <div><h2 className="sh">Deal Database — 2019 to Q1 2026</h2><p className="sh-sub">{ALL_DEALS.length} verified deals · Full 7-year history · Click company name to view source</p></div>
-        <button className="btn bp">⬇ Export CSV</button>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end"}}>
+          <div><h2 className="sh">Deal Database, 2019 to Q1 2026</h2><p className="sh-sub">{ALL_DEALS.length} verified deals, full 7-year history. Click company name to view source</p></div>
+          <button className="btn bp" onClick={()=>{
+            const headers=["Company","Country","Sector","Year","Quarter","Amount (M)","Round","Type","Investors"];
+            const rows=filtered.map(d=>[d.company,d.country,d.sector,d.year,d.quarter||"",d.amount,d.round,d.type,d.investors||""]);
+            const csv=[headers,...rows].map(r=>r.map(c=>'"'+(c+"").replace(/"/g,'""')+'"').join(",")).join("\n");
+            const blob=new Blob([csv],{type:"text/csv"});
+            const url=URL.createObjectURL(blob);
+            const a=document.createElement("a");a.href=url;a.download="ranes_deals_export.csv";a.click();
+            URL.revokeObjectURL(url);
+          }}>⬇ Export CSV</button>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
         {[["Database Span","2019–2026","7 years of data","Ranes Analytics"],["Total Deals",ALL_DEALS.length,"Verified records","Africa:TBD / Disrupt Africa"],["Total Capital","$21B+","Across all years","Multiple sources"],["Active Now",ACTIVE_DEALS.length,"Fundraises in-progress","LaunchBase Q1 2026"]].map(([l,v,s,src])=>(
@@ -765,7 +773,7 @@ function DealsView(){
         </table>
       </div>
 
-      <div style={{fontFamily:AN,fontSize:18,fontWeight:700,color:TX,marginBottom:4}}>🔴 Active Fundraises Q1/Q2 2026 ({ACTIVE_DEALS.length})</div>
+      <div style={{fontFamily:AN,fontSize:18,fontWeight:700,color:TX,marginBottom:4}}><span style={{color:M,fontWeight:700}}>◉</span> Active Fundraises Q1/Q2 2026 ({ACTIVE_DEALS.length})</div>
       <div style={{display:"flex",flexDirection:"column",gap:11}}>
         {ACTIVE_DEALS.map((d,i)=>{
           const cc=d.confidence>=90?"#1A6E3C":d.confidence>=80?GD:M;
