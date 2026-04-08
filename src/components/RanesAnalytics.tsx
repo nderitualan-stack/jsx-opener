@@ -432,7 +432,7 @@ function DashboardView(){
       <div className="card" style={{padding:"18px 20px"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:14}}>
           <div>
-            <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>📅 Time Range &amp; Filters</div>
+            <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Time Range &amp; Filters</div>
             <p style={{fontSize:12,color:TX2,fontFamily:AN}}>Select any period from 2019 to Q1 2026 to explore the full African investment landscape</p>
           </div>
           <div style={{display:"flex",gap:8}}>
@@ -834,8 +834,8 @@ function AIView(){
   return(
     <div className="fade-up" style={{display:"flex",flexDirection:"column",height:"calc(100vh - 170px)",minHeight:520,maxHeight:800}}>
       <div style={{marginBottom:14,flexShrink:0,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <div><h2 className="sh">Ranes AI</h2><p className="sh-sub">Powered by Claude · Full 2019–Q1 2026 dataset · Smart fallbacks always available</p></div>
-        <div style={{display:"flex",alignItems:"center",gap:8}}><span className="ldot"/><span style={{fontSize:11,color:GD,fontWeight:700,fontFamily:AN}}>LIVE</span><span className="badge bgn">✓ 7 Years Data</span></div>
+        <div><h2 className="sh">Ranes AI</h2><p className="sh-sub">Full 2019–Q1 2026 dataset with smart fallbacks always available</p></div>
+        <div style={{display:"flex",alignItems:"center",gap:8}}><span className="ldot"/><span style={{fontSize:11,color:GD,fontWeight:700,fontFamily:AN}}>LIVE</span><span className="badge bgn">7 Years Data</span></div>
       </div>
       <div className="chat-win">
         {msgs.map((m,i)=>(<div key={i} className={m.role==="user"?"row-user":"row-ai"}>{m.role==="assistant"&&<div className="av-ai"><HawkSVG size={20}/></div>}<div className={m.role==="user"?"bub-user":"bub-ai"}>{m.role==="assistant"&&<div className="ai-lbl">Ranes AI</div>}<div dangerouslySetInnerHTML={{__html:md(m.content)}}/></div>{m.role==="user"&&<div className="av-user">U</div>}</div>))}
