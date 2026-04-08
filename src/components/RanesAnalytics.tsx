@@ -200,11 +200,50 @@ const NEWS=[
 
 /* Legal */
 const LEGAL={
-  privacy:{title:"Privacy Policy",secs:[{h:"Data Controller",t:"Ranes Analytics. To contact us, use the message form at the bottom of this page."},{h:"Data We Collect",t:"Registration data (name, email, company); usage data (search queries, features used). No payment data is collected at this time."},{h:"Your Rights",t:"Under GDPR, Kenya DPA 2019, and Nigeria NDPR: access, rectification, erasure, restriction, portability. Submit requests via the contact form on this platform. Complaints to ODPC (Kenya) or NITDA (Nigeria)."},{h:"Last Updated",t:"April 2026 — Ranes Analytics."}]},
-  terms:{title:"Terms & Conditions",secs:[{h:"Parties",t:"Ranes Analytics operates this platform. By accessing it you agree to these Terms."},{h:"Not Investment Advice",t:"Nothing on Ranes Analytics constitutes investment advice, a solicitation, or a regulated financial service."},{h:"Access",t:"Ranes Analytics is currently free to access. Exclusive premium features may be introduced in future. You will be notified in advance of any changes."},{h:"Governing Law",t:"Laws of Kenya. Disputes: High Court of Kenya, Commercial Division, Nairobi. April 2026."}]},
-  gdpr:{title:"GDPR Compliance",secs:[{h:"Controller",t:"Ranes Analytics. Contact us via the message form on this platform."},{h:"Privacy by Design",t:"GDPR Article 25: data minimisation, purpose limitation, automated deletion schedules."},{h:"Breach Notification",t:"Supervisory authority notified within 72 hours (Article 33). Affected users notified for high-risk breaches (Article 34)."}]},
-  kdpa:{title:"Kenya & Nigeria DPA",secs:[{h:"Kenya DPA 2019",t:"Ranes Analytics complies with Kenya's Data Protection Act 2019."},{h:"Nigeria NDPR",t:"Ranes Analytics complies with NDPR 2019 as administered by NITDA."},{h:"Contact",t:"Use the contact form at the bottom of this platform."}]},
-  disclaimer:{title:"Investment Disclaimer",secs:[{h:"Informational Only",t:"All content is for informational and research purposes only. Nothing constitutes investment advice or an offer to purchase any security."},{h:"Not Regulated",t:"Ranes Analytics is not authorised by CMA (Kenya), SEC (Nigeria), FSCA (South Africa), or any financial regulator."},{h:"Data Accuracy",t:"IRR proxies are estimates. Not guarantees of future returns. Always conduct independent due diligence."},{h:"Contact",t:"Use the contact form on this platform. | Ranes Analytics | © 2026"}]}
+  privacy:{title:"Privacy Policy",secs:[
+    {h:"Data Controller",t:"Ranes Analytics is the data controller responsible for the personal data processed through this platform. We are registered and operate from Nairobi, Kenya. If you have any questions about how your data is handled, please reach out using the message form at the bottom of this page."},
+    {h:"Data We Collect",t:"We collect only what we need to deliver our services. This includes registration information such as your name, email address and company affiliation. We also collect usage data including the features you interact with, search queries you run and the pages you visit on our platform. We do not collect any payment information at this time. We may also collect technical data such as your IP address, browser type and device information to improve the performance and security of our platform."},
+    {h:"How We Use Your Data",t:"Your data is used to provide, maintain and improve our investment intelligence services. We use registration data to manage your account and communicate relevant platform updates. Usage data helps us understand how our tools are being used so we can make them more useful. We do not sell your personal data to third parties. We may share anonymised, aggregated analytics with partners for research purposes, but this data cannot be used to identify you."},
+    {h:"Data Storage and Security",t:"Your data is stored on secure, encrypted servers. We implement industry-standard technical and organisational safeguards including encryption in transit and at rest, role-based access controls and regular security audits. We retain your personal data for as long as your account remains active or as needed to fulfil the purposes described in this policy. You may request deletion at any time."},
+    {h:"Cookies and Tracking",t:"We use essential cookies to keep the platform running smoothly. We may also use analytics cookies to understand how visitors use the site. You can manage your cookie preferences through your browser settings. We do not use third-party advertising trackers."},
+    {h:"Your Rights",t:"Depending on where you are based, you may have the right to access, correct, delete or export your personal data. Under the GDPR (EU), Kenya Data Protection Act 2019 and Nigeria NDPR, you can exercise your rights to access, rectification, erasure, restriction of processing and data portability. To make a request, please use the contact form on this platform. You also have the right to lodge a complaint with a supervisory authority. In Kenya, that is the Office of the Data Protection Commissioner (ODPC). In Nigeria, it is the National Information Technology Development Agency (NITDA)."},
+    {h:"Changes to This Policy",t:"We may update this policy from time to time to reflect changes in our practices or legal requirements. When we do, we will update the date below and notify you through the platform where appropriate."},
+    {h:"Last Updated",t:"April 2026. Ranes Analytics."}
+  ]},
+  terms:{title:"Terms & Conditions",secs:[
+    {h:"Parties and Acceptance",t:"Ranes Analytics operates this platform from Nairobi, Kenya. By accessing or using any part of this platform, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use the platform."},
+    {h:"Nature of Content",t:"Everything published on Ranes Analytics is for informational and research purposes only. Nothing on this platform constitutes investment advice, a solicitation to buy or sell any security, or a regulated financial service. We present data, analysis and commentary to help you make better-informed decisions, but the final responsibility for any investment decision rests entirely with you."},
+    {h:"Platform Access and Accounts",t:"Ranes Analytics is currently free to access. We may introduce premium features or subscription tiers in the future. If we do, we will give you reasonable notice before any changes take effect and you will never be charged without your explicit consent."},
+    {h:"User Conduct",t:"You agree to use this platform only for lawful purposes. You may not attempt to gain unauthorised access to any part of the platform, interfere with its operation, scrape or bulk-download data without written permission, or use the platform to distribute misleading or harmful content."},
+    {h:"Intellectual Property",t:"All content on Ranes Analytics, including text, data, graphics, logos and software, is owned by or licensed to Ranes Analytics and is protected by applicable intellectual property laws. You may reference our data and analysis with proper attribution but may not reproduce, redistribute or commercially exploit it without our written consent."},
+    {h:"Data Accuracy and Limitation of Liability",t:"We work hard to ensure the accuracy of our data by cross-referencing multiple verified sources. However, we cannot guarantee that every figure is error-free. IRR estimates are proxies based on publicly available data and are not guarantees of future returns. Ranes Analytics shall not be liable for any loss or damage arising from your reliance on information published on this platform. Always conduct your own independent due diligence."},
+    {h:"Third-Party Links",t:"Our platform may contain links to external websites and sources. We include these for reference and convenience but we do not endorse or take responsibility for the content, accuracy or practices of any third-party site."},
+    {h:"Termination",t:"We reserve the right to suspend or terminate your access to the platform at our discretion, particularly if we believe you have violated these Terms. You may also stop using the platform at any time."},
+    {h:"Governing Law and Disputes",t:"These Terms are governed by the laws of the Republic of Kenya. Any disputes arising from your use of this platform shall be subject to the exclusive jurisdiction of the High Court of Kenya, Commercial Division, Nairobi."},
+    {h:"Contact",t:"If you have questions about these Terms, please use the contact form at the bottom of this page. April 2026."}
+  ]},
+  gdpr:{title:"GDPR Compliance",secs:[
+    {h:"Controller",t:"Ranes Analytics acts as the data controller for personal data processed through this platform. You can reach us using the message form on this page."},
+    {h:"Legal Basis for Processing",t:"We process your personal data on the basis of legitimate interest (to deliver and improve our investment intelligence services), consent (where you have opted in to communications) and contractual necessity (to fulfil the service you have registered for)."},
+    {h:"Privacy by Design",t:"In accordance with GDPR Article 25, we build data protection into our systems from the ground up. This means we practise data minimisation (collecting only what we need), purpose limitation (using data only for the stated purpose) and storage limitation (deleting data when it is no longer necessary)."},
+    {h:"Data Subject Rights",t:"Under the GDPR, you have the right to access your data, rectify inaccuracies, request erasure, restrict processing, object to processing and request data portability. To exercise any of these rights, please use the contact form on this platform."},
+    {h:"International Transfers",t:"Where your data is transferred outside the European Economic Area, we ensure appropriate safeguards are in place, including standard contractual clauses approved by the European Commission."},
+    {h:"Breach Notification",t:"In the event of a personal data breach, we will notify the relevant supervisory authority within 72 hours as required by Article 33. Where a breach poses a high risk to your rights and freedoms, we will also notify you directly as required by Article 34."}
+  ]},
+  kdpa:{title:"Kenya & Nigeria DPA",secs:[
+    {h:"Kenya Data Protection Act 2019",t:"Ranes Analytics complies with Kenya's Data Protection Act 2019 and its implementing regulations. We are committed to lawful, fair and transparent processing of personal data. As a data controller registered in Kenya, we uphold the principles of data minimisation, purpose limitation, accuracy and accountability as set out in the Act."},
+    {h:"Nigeria NDPR 2019",t:"Ranes Analytics complies with the Nigeria Data Protection Regulation 2019 as administered by the National Information Technology Development Agency (NITDA). We ensure that any personal data collected from Nigerian users is processed in accordance with the regulation, including obtaining appropriate consent and implementing adequate security measures."},
+    {h:"Cross-Border Data Processing",t:"Where data is processed across jurisdictions, we ensure compliance with the data protection laws of each relevant country. We apply the highest applicable standard to protect your information regardless of where you are located."},
+    {h:"Contact",t:"For any data protection enquiries or requests, please use the contact form at the bottom of this platform."}
+  ]},
+  disclaimer:{title:"Investment Disclaimer",secs:[
+    {h:"Informational Only",t:"All content published on Ranes Analytics is for informational and research purposes only. Nothing on this platform constitutes investment advice, a recommendation to buy or sell any security, or an offer of any financial product or service."},
+    {h:"Not a Regulated Entity",t:"Ranes Analytics is not authorised or regulated by the Capital Markets Authority (CMA) of Kenya, the Securities and Exchange Commission (SEC) of Nigeria, the Financial Sector Conduct Authority (FSCA) of South Africa, or any other financial regulator in any jurisdiction."},
+    {h:"No Guarantees",t:"IRR estimates, confidence scores and other analytical metrics presented on this platform are proxies based on publicly available data. They are not guarantees or predictions of future investment returns. Past performance is not indicative of future results."},
+    {h:"Independent Due Diligence",t:"Before making any investment decision, you should conduct your own thorough and independent due diligence. Consider seeking advice from a qualified and licensed financial adviser who understands your specific circumstances."},
+    {h:"Limitation of Liability",t:"Ranes Analytics shall not be liable for any direct, indirect, incidental or consequential damages arising from your use of this platform or your reliance on any information published here."},
+    {h:"Contact",t:"If you have questions about this disclaimer, please use the contact form on this platform. Ranes Analytics, © 2026."}
+  ]}
 };
 
 /* AI */
@@ -393,7 +432,7 @@ function DashboardView(){
       <div className="card" style={{padding:"18px 20px"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:14}}>
           <div>
-            <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>📅 Time Range &amp; Filters</div>
+            <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Time Range &amp; Filters</div>
             <p style={{fontSize:12,color:TX2,fontFamily:AN}}>Select any period from 2019 to Q1 2026 to explore the full African investment landscape</p>
           </div>
           <div style={{display:"flex",gap:8}}>
@@ -456,17 +495,16 @@ function DashboardView(){
       {/* ── SUMMARY KPIs for selected range ── */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:13}}>
         {[
-          ["📅","2019 – Q1 2026","Ranes Analytics covers","Full 7-year dataset","2019 to Apr 2026"],
-          ["💰",`$${(totalInRange/1000).toFixed(1)}B`,"Total in Range",`${yearRange[0]}–${yearRange[1]}`,`${annualFiltered.length} year(s) selected`],
-          ["🏆",peakYear?.year||"2022","Peak Year",`$${peakYear?.total||5000}M raised`,"Africa: The Big Deal"],
-          ["📊","$5.0B","All-Time Peak","2022 · 1,034 deals","AVCA / Africa:TBD"],
-          ["⬇","$0.9B","Lowest (COVID)","2020 · 359 deals","Africa: The Big Deal"],
-          ["📈","$3.2B","2025 Rebound","+40% YoY recovery","Technext24 / TBD"],
-          ["🔢","6,000+","Total Deals 2019–26","Across 54 countries","Ranes Analytics"],
-          ["🦄","16+","Unicorns Created","2019–2025","Partech / Disrupt Africa"],
+          ["◈",`$${(totalInRange/1000).toFixed(1)}B`,"Total in Range",`${yearRange[0]}–${yearRange[1]}`,`${annualFiltered.length} year(s) selected`],
+          ["◆",peakYear?.year||"2022","Peak Year",`$${peakYear?.total||5000}M raised`,"Africa: The Big Deal"],
+          ["▲","$5.0B","All-Time Peak","2022, 1,034 deals","AVCA / Africa:TBD"],
+          ["▼","$0.9B","Lowest (COVID)","2020, 359 deals","Africa: The Big Deal"],
+          ["◉","$3.2B","2025 Rebound","+40% YoY recovery","Technext24 / TBD"],
+          ["■","6,000+","Total Deals 2019–26","Across 54 countries","Ranes Analytics"],
+          ["●","16+","Unicorns Created","2019–2025","Partech / Disrupt Africa"],
         ].map(([icon,val,label,sub,src],i)=>(
           <div key={i} className="card" style={{padding:"15px"}}>
-            <div style={{fontSize:18,marginBottom:6}}>{icon}</div>
+            <div style={{fontSize:18,marginBottom:6,color:M,fontWeight:700}}>{icon}</div>
             <div className="sv" style={{fontSize:22}}>{val}</div>
             <div style={{fontSize:11,fontWeight:700,color:TX,margin:"3px 0 1px",fontFamily:AN,textTransform:"uppercase",letterSpacing:0.4}}>{label}</div>
             <div style={{fontSize:11,color:TX2,fontFamily:AN}}>{sub}</div>
@@ -663,9 +701,17 @@ function DealsView(){
 
   return(
     <div className="fade-up" style={{display:"flex",flexDirection:"column",gap:18}}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end"}}>
-        <div><h2 className="sh">Deal Database — 2019 to Q1 2026</h2><p className="sh-sub">{ALL_DEALS.length} verified deals · Full 7-year history · Click company name to view source</p></div>
-        <button className="btn bp">⬇ Export CSV</button>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end"}}>
+          <div><h2 className="sh">Deal Database, 2019 to Q1 2026</h2><p className="sh-sub">{ALL_DEALS.length} verified deals, full 7-year history. Click company name to view source</p></div>
+          <button className="btn bp" onClick={()=>{
+            const headers=["Company","Country","Sector","Year","Quarter","Amount (M)","Round","Type","Investors"];
+            const rows=filtered.map(d=>[d.company,d.country,d.sector,d.year,d.quarter||"",d.amount,d.round,d.type,d.investors||""]);
+            const csv=[headers,...rows].map(r=>r.map(c=>'"'+(c+"").replace(/"/g,'""')+'"').join(",")).join("\n");
+            const blob=new Blob([csv],{type:"text/csv"});
+            const url=URL.createObjectURL(blob);
+            const a=document.createElement("a");a.href=url;a.download="ranes_deals_export.csv";a.click();
+            URL.revokeObjectURL(url);
+          }}>⬇ Export CSV</button>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
         {[["Database Span","2019–2026","7 years of data","Ranes Analytics"],["Total Deals",ALL_DEALS.length,"Verified records","Africa:TBD / Disrupt Africa"],["Total Capital","$21B+","Across all years","Multiple sources"],["Active Now",ACTIVE_DEALS.length,"Fundraises in-progress","LaunchBase Q1 2026"]].map(([l,v,s,src])=>(
@@ -727,7 +773,7 @@ function DealsView(){
         </table>
       </div>
 
-      <div style={{fontFamily:AN,fontSize:18,fontWeight:700,color:TX,marginBottom:4}}>🔴 Active Fundraises Q1/Q2 2026 ({ACTIVE_DEALS.length})</div>
+      <div style={{fontFamily:AN,fontSize:18,fontWeight:700,color:TX,marginBottom:4}}><span style={{color:M,fontWeight:700}}>◉</span> Active Fundraises Q1/Q2 2026 ({ACTIVE_DEALS.length})</div>
       <div style={{display:"flex",flexDirection:"column",gap:11}}>
         {ACTIVE_DEALS.map((d,i)=>{
           const cc=d.confidence>=90?"#1A6E3C":d.confidence>=80?GD:M;
@@ -788,8 +834,8 @@ function AIView(){
   return(
     <div className="fade-up" style={{display:"flex",flexDirection:"column",height:"calc(100vh - 170px)",minHeight:520,maxHeight:800}}>
       <div style={{marginBottom:14,flexShrink:0,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <div><h2 className="sh">Ranes AI</h2><p className="sh-sub">Powered by Claude · Full 2019–Q1 2026 dataset · Smart fallbacks always available</p></div>
-        <div style={{display:"flex",alignItems:"center",gap:8}}><span className="ldot"/><span style={{fontSize:11,color:GD,fontWeight:700,fontFamily:AN}}>LIVE</span><span className="badge bgn">✓ 7 Years Data</span></div>
+        <div><h2 className="sh">Ranes AI</h2><p className="sh-sub">Full 2019–Q1 2026 dataset with smart fallbacks always available</p></div>
+        <div style={{display:"flex",alignItems:"center",gap:8}}><span className="ldot"/><span style={{fontSize:11,color:GD,fontWeight:700,fontFamily:AN}}>LIVE</span><span className="badge bgn">7 Years Data</span></div>
       </div>
       <div className="chat-win">
         {msgs.map((m,i)=>(<div key={i} className={m.role==="user"?"row-user":"row-ai"}>{m.role==="assistant"&&<div className="av-ai"><HawkSVG size={20}/></div>}<div className={m.role==="user"?"bub-user":"bub-ai"}>{m.role==="assistant"&&<div className="ai-lbl">Ranes AI</div>}<div dangerouslySetInnerHTML={{__html:md(m.content)}}/></div>{m.role==="user"&&<div className="av-user">U</div>}</div>))}
@@ -813,7 +859,7 @@ function NewsView(){
   const sc=s=>s==="positive"?"#1A6E3C":s==="negative"?"#C0392B":GD;
   return(
     <div className="fade-up" style={{display:"flex",flexDirection:"column",gap:16}}>
-      <div><h2 className="sh">Intelligence Feed</h2><p className="sh-sub">Verified primary sources · Click any headline to open the full article · Multi-year coverage</p></div>
+      <div><h2 className="sh">Intelligence Feed</h2><p className="sh-sub">Verified primary sources. Click any headline to open the full article. Multi-year coverage</p></div>
       <div style={{display:"flex",flexDirection:"column",gap:10}}>
         {NEWS.map((n,i)=>(
           <a key={i} href={n.url} target="_blank" rel="noreferrer" style={{textDecoration:"none",display:"block"}}>
@@ -845,14 +891,14 @@ function ActiveDealsView(){
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",flexWrap:"wrap",gap:12}}>
         <div>
           <h2 className="sh">Active Deals</h2>
-          <p className="sh-sub">Companies currently fundraising · Verified signals · Q1/Q2 2026 · For investor use</p>
+          <p className="sh-sub">Companies currently fundraising, verified signals, Q1/Q2 2026. For investor use</p>
         </div>
         <span className="badge bm" style={{fontSize:12,padding:"4px 12px"}}>{ACTIVE_DEALS.length} Live Opportunities</span>
       </div>
 
       {/* Disclaimer */}
       <div style={{background:M_BG,border:`1px solid ${M}33`,borderRadius:8,padding:"12px 16px",fontSize:12,color:TX2,lineHeight:1.7,fontFamily:AN}}>
-        <strong style={{color:M}}>⚠️ Investor Note:</strong> Active deal intelligence is sourced from verified public announcements, investor reports (LaunchBase Africa Q1 2026, TechCabal Insights, Innovation Village), and corroborated signals. Confidence scores reflect multi-source verification. Always conduct independent due diligence. <strong style={{color:TX}}>This is not investment advice.</strong>
+        <strong style={{color:M}}>Investor Note:</strong> Active deal intelligence is sourced from verified public announcements, investor reports (LaunchBase Africa Q1 2026, TechCabal Insights, Innovation Village) and corroborated signals. Confidence scores reflect multi-source verification. Always conduct independent due diligence. <strong style={{color:TX}}>This is not investment advice.</strong>
       </div>
 
       {/* Status filter */}
@@ -867,13 +913,13 @@ function ActiveDealsView(){
       {/* Summary KPIs */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
         {[
-          ["🔴","Closing",ACTIVE_DEALS.filter(d=>d.status==="Closing").length+" deals","Actively closing rounds now"],
-          ["📢","Announced",ACTIVE_DEALS.filter(d=>d.status==="Announced").length+" deals","Publicly seeking capital"],
-          ["🔄","In-process",ACTIVE_DEALS.filter(d=>d.status==="In-process").length+" deals","Due diligence / discussions"],
-          ["💼","Total Pipeline","$"+ACTIVE_DEALS.reduce((a,d)=>{const v=parseFloat(d.range.split("–")[1].replace(/[^0-9.]/g,""));return a+v;},0).toFixed(0)+"M+","Combined target raise"],
+          ["◉","Closing",ACTIVE_DEALS.filter(d=>d.status==="Closing").length+" deals","Actively closing rounds now"],
+          ["◈","Announced",ACTIVE_DEALS.filter(d=>d.status==="Announced").length+" deals","Publicly seeking capital"],
+          ["◆","In-process",ACTIVE_DEALS.filter(d=>d.status==="In-process").length+" deals","Due diligence / discussions"],
+          ["■","Total Pipeline","$"+ACTIVE_DEALS.reduce((a,d)=>{const v=parseFloat(d.range.split("–")[1].replace(/[^0-9.]/g,""));return a+v;},0).toFixed(0)+"M+","Combined target raise"],
         ].map(([icon,label,val,sub])=>(
           <div key={label} className="card" style={{padding:"15px 16px"}}>
-            <div style={{fontSize:20,marginBottom:6}}>{icon}</div>
+            <div style={{fontSize:20,marginBottom:6,color:M,fontWeight:700}}>{icon}</div>
             <div style={{fontFamily:AN,fontSize:11,fontWeight:700,color:TX,textTransform:"uppercase",letterSpacing:0.5,marginBottom:2}}>{label}</div>
             <div style={{fontFamily:AN,fontSize:20,fontWeight:700,color:M,lineHeight:1}}>{val}</div>
             <div style={{fontSize:11,color:TX2,fontFamily:AN,marginTop:3}}>{sub}</div>
@@ -934,7 +980,7 @@ function ActiveDealsView(){
 
       {/* Founder note — no button, just informational */}
       <div style={{background:N_BG,border:`1px solid ${N4}33`,borderRadius:8,padding:"16px 20px"}}>
-        <div style={{fontFamily:AN,fontSize:13,fontWeight:700,color:TX,marginBottom:3}}>📋 For Founders</div>
+        <div style={{fontFamily:AN,fontSize:13,fontWeight:700,color:TX,marginBottom:3}}>For Founders</div>
         <p style={{fontSize:13,color:TX2,fontFamily:AN,lineHeight:1.65}}>Deal intelligence on this page is sourced from verified public announcements. Use the contact form below to reach the Ranes Analytics team for further enquiries.</p>
       </div>
     </div>
@@ -949,50 +995,50 @@ function PanAfricanView({goToService}){
 
   const STORIES=[
     {
-      id:0, icon:"🌍", tag:"Homegrown Capital",
+      id:0, icon:"◈", tag:"Homegrown Capital",
       hook:"The money was already here.",
-      opener:"Before a single dollar arrived from Palo Alto or London, Africans were solving the continent's hardest problems. Not with venture-backed startups. With savings circles, rotating credit, mobile phones, and a kind of pragmatic creativity that only comes from living inside the problem.",
-      body:"What has changed is not the ingenuity — it is the infrastructure around it. Today, the IFC, BII, Novastar Ventures, and Azur Innovation Fund are channelling capital into companies built from the inside out. Moniepoint didn't model itself on Stripe. It studied how Nigerian market traders actually handle cash: the ajo groups, the informal ledgers, the trust networks built over generations. That depth of understanding is not a soft cultural advantage. It is a structural moat that a San Francisco team could spend a decade trying to replicate and still miss. The African startup ecosystem does not need external validation to be legitimate. It needs capital that understands what it is funding.",
-      pull:"Africa does not need to be discovered. It needs to be taken seriously — on its own terms, with investors who understand that the best insights come from being here.",
-      s1:"$3.2B raised across Africa in 2025 — up 40% year-on-year", s1src:"Technext24 / Africa: The Big Deal",
-      s2:"IFC (4 deals), Novastar (3), Azur (3) led Q1 2026 — DFI and homegrown capital dominant", s2src:"LaunchBase Africa Q1 2026",
+      opener:"Long before any dollar arrived from Palo Alto or London, Africans were solving the continent's hardest problems. Not with venture-backed startups but with savings circles, rotating credit, mobile phones and a kind of pragmatic creativity that only comes from living inside the problem.",
+      body:"What has changed is not the ingenuity. It is the infrastructure around it. Today, institutions like the IFC, BII, Novastar Ventures and Azur Innovation Fund are channelling capital into companies built from the inside out. Moniepoint did not model itself on Stripe. It studied how Nigerian market traders actually handle cash, from the ajo groups to the informal ledgers and the trust networks built over generations. That depth of understanding is not a soft cultural advantage. It is a structural moat that a team in San Francisco could spend a decade trying to replicate and still miss. The African startup ecosystem does not need external validation to be legitimate. It needs capital that understands what it is funding.",
+      pull:"Africa does not need to be discovered. It needs to be taken seriously, on its own terms, with investors who understand that the best insights come from being here.",
+      s1:"$3.2B raised across Africa in 2025, up 40% year-on-year", s1src:"Technext24 / Africa: The Big Deal",
+      s2:"IFC (4 deals), Novastar (3), Azur (3) led Q1 2026, DFI and homegrown capital dominant", s2src:"LaunchBase Africa Q1 2026",
       colour:M,
     },
     {
-      id:1, icon:"🔗", tag:"Interconnected Markets",
+      id:1, icon:"◆", tag:"Interconnected Markets",
       hook:"The deal in Nairobi is a bet on Kampala too.",
-      opener:"The most expensive mistake in African investment is to treat 54 countries as 54 separate decisions. They are not. They are nodes in a network that is quietly integrating — through mobile money corridors, informal trade routes, shared infrastructure, and the gradual activation of the AfCFTA.",
-      body:"When Spiro closes a $57M debt round for electric motorcycles in Kenya, the story is not about one company in one city. It is about the early infrastructure layer of a cross-border EV network — the same way M-Pesa was, in 2007, early infrastructure for a financial system that now spans East Africa. Nigeria's Flutterwave processes payments across 34 African countries. Ghana's Wave is scaling through Francophone West Africa. These are not exceptions. They are the shape of what is coming as the continent's internal connections strengthen. Investors who read the network will be years ahead of those who read the countries.",
-      pull:"The question is not whether to invest in Africa. It is whether you understand which deals are nodes in a continental network — and which ones are isolated bets.",
+      opener:"The most expensive mistake in African investment is treating 54 countries as 54 separate decisions. They are not. They are nodes in a network that is quietly integrating through mobile money corridors, informal trade routes, shared infrastructure and the gradual activation of the AfCFTA.",
+      body:"When Spiro closes a $57M debt round for electric motorcycles in Kenya, the story is not about one company in one city. It is about the early infrastructure layer of a cross-border EV network, in the same way M-Pesa was early infrastructure for a financial system that now spans East Africa. Nigeria's Flutterwave processes payments across 34 African countries. Ghana's Wave is scaling through Francophone West Africa. These are not exceptions. They are the shape of what is coming as the continent's internal connections strengthen. Investors who read the network will be years ahead of those who read the countries.",
+      pull:"The question is not whether to invest in Africa. It is whether you understand which deals are nodes in a continental network and which ones are isolated bets.",
       s1:"AfCFTA: 54 countries, $3.4 trillion combined GDP, 1.4 billion consumers", s1src:"African Union / World Bank",
-      s2:"Logistics sector up 340% year-on-year in Q1 2026 — cross-border trade driving it", s2src:"TechCabal Insights Q1 2026",
+      s2:"Logistics sector up 340% year-on-year in Q1 2026, cross-border trade driving it", s2src:"TechCabal Insights Q1 2026",
       colour:N4,
     },
     {
-      id:2, icon:"⚡", tag:"Resource Sovereignty",
+      id:2, icon:"▲", tag:"Resource Sovereignty",
       hook:"Africa holds the keys to the electric era. The question is who keeps the value.",
-      opener:"For generations, the pattern was simple and brutal: extract raw materials from the continent, process them elsewhere, sell the finished product back at a premium. That pattern is breaking — faster than most investors realise.",
-      body:"SolarAfrica's $94M project debt round in early 2026 was not financed by a foreign climate fund. It was financed by Rand Merchant Bank and Investec — South African institutions, on South African terms. That is not a coincidence. It is a signal. Across East Africa, a generation of e-mobility startups is building something the old extractive model never permitted: full value-chain ownership. Spiro, Zeno, and Arc Ride do not just sell electric motorcycles. They finance them. They maintain them. They swap the batteries and build the charging grid. Every layer of value that would previously have flowed offshore is being retained on the continent. The DRC holds 70% of the world's cobalt. East Africa has some of its most productive solar resources. North Africa controls critical shipping corridors. These are not just commodities. In the hands of the right companies, they are the infrastructure of the next industrial era — and for the first time, Africans are building that infrastructure themselves.",
+      opener:"For generations, the pattern was simple and brutal: extract raw materials from the continent, process them elsewhere, sell the finished product back at a premium. That pattern is breaking, faster than most investors realise.",
+      body:"SolarAfrica's $94M project debt round in early 2026 was not financed by a foreign climate fund. It was financed by Rand Merchant Bank and Investec, South African institutions on South African terms. That is not a coincidence. It is a signal. Across East Africa, a generation of e-mobility startups is building something the old extractive model never permitted: full value-chain ownership. Spiro, Zeno and Arc Ride do not just sell electric motorcycles. They finance them, maintain them, swap the batteries and build the charging grid. Every layer of value that would previously have flowed offshore is being retained on the continent. The DRC holds 70% of the world's cobalt. East Africa has some of its most productive solar resources. North Africa controls critical shipping corridors. These are not just commodities. In the hands of the right companies, they are the infrastructure of the next industrial era, and for the first time Africans are building that infrastructure themselves.",
       pull:"The continent that powers the world's electric vehicles is now building them. That is not an emerging market story. That is a structural shift in global value chains.",
-      s1:"Energy sector: $141M raised Q1 2026 — IRR proxy ~28%, lowest risk category", s1src:"Ranes Analytics Benchmark Model",
-      s2:"SolarAfrica $94M financed by African institutions — not a foreign climate fund", s2src:"Innovation Village, February 2026",
+      s1:"Energy sector: $141M raised Q1 2026, IRR proxy ~28%, lowest risk category", s1src:"Ranes Analytics Benchmark Model",
+      s2:"SolarAfrica $94M financed by African institutions, not a foreign climate fund", s2src:"Innovation Village, February 2026",
       colour:"#1A6E3C",
     },
     {
-      id:3, icon:"👥", tag:"The Demographic Thesis",
+      id:3, icon:"●", tag:"The Demographic Thesis",
       hook:"By 2040, one in four people on Earth will be African. That is not a challenge. It is the largest consumer market in history.",
-      opener:"Spend a morning in Nairobi's Westlands, Cairo's New Cairo district, or Lagos Island — and the thing that strikes you first is not the infrastructure gaps or the currency volatility. It is the energy. The density of ambition. The sense of a population that has stopped waiting for conditions to improve and started building the conditions it wants.",
-      body:"Africa's 700 million people under the age of 25 are not a statistic to be managed. They are simultaneously the continent's largest consumer cohort, its most dynamic engineering talent pool, and its most prolific entrepreneurial class. Moniepoint, Andela, Wave, and LemFi were all built by Africans under 40 who understood their users in the most fundamental possible way: they are their users. That founder-market fit is not sentimental. It is the single most reliable predictor of durable returns in a market that external investors have consistently underestimated. The investors who will look back on this decade most clearly are those who recognised that demographic advantage, treated seriously, is one of the rarest and most durable structural advantages in all of private markets.",
-      pull:"The investors who will look back on this decade with the greatest satisfaction are those who recognised that youth is not a variable to be managed — it is the thesis itself.",
-      s1:"60% of Africa's population is under 25 — over 700 million young consumers and builders", s1src:"UN Population Division 2024",
+      opener:"Spend a morning in Nairobi's Westlands, Cairo's New Cairo district or Lagos Island and the thing that strikes you first is not the infrastructure gaps or the currency volatility. It is the energy. The density of ambition. The sense of a population that has stopped waiting for conditions to improve and started building the conditions it wants.",
+      body:"Africa's 700 million people under the age of 25 are not a statistic to be managed. They are the continent's largest consumer cohort, its most dynamic engineering talent pool and its most prolific entrepreneurial class all at once. Moniepoint, Andela, Wave and LemFi were all built by Africans under 40 who understood their users in the most fundamental way possible: they are their users. That founder-market fit is not sentimental. It is the single most reliable predictor of durable returns in a market that external investors have consistently underestimated. The investors who will look back on this decade most clearly are those who recognised that demographic advantage, treated seriously, is one of the rarest structural advantages in all of private markets.",
+      pull:"The investors who will look back on this decade with the greatest satisfaction are those who recognised that youth is not a variable to be managed. It is the thesis itself.",
+      s1:"60% of Africa's population is under 25, over 700 million young consumers and builders", s1src:"UN Population Division 2024",
       s2:"Moniepoint, Andela, Wave, LemFi: all built and led by Africans under 40", s2src:"Company records / TechCabal",
       colour:GD,
     },
     {
-      id:4, icon:"🏛️", tag:"African Capital",
+      id:4, icon:"■", tag:"African Capital",
       hook:"The capital is already on the continent. It just needs a reason to move.",
-      opener:"Every conversation about African investment eventually arrives at the same assumption: the continent is capital-scarce, dependent on foreign inflows, and therefore structurally fragile. This assumption is not just wrong. It is becoming more wrong every single year.",
-      body:"Africa's pension funds manage over $1.8 trillion in assets. Its sovereign wealth funds hold hundreds of billions more. The African diaspora sends $90 billion home annually — more than all foreign aid to the continent combined, year after year. The story is not that African capital does not exist. It is that the infrastructure to deploy it productively — the data platforms, the deal networks, the co-investment frameworks, the performance benchmarks — has been systematically underdeveloped. That is precisely what is changing. When IFC, BII, and Proparco together deployed over $4 billion into African deals in 2025, they were not filling a gap. They were building the scaffolding for a private capital market that African institutions will eventually own. Ranes Analytics exists because African investors, founders, and institutions deserve the same quality of intelligence that their counterparts in New York, London, and Singapore have always taken for granted. When African capital can see itself clearly, it moves. And when it moves at scale, the returns do not need to be extracted — they stay.",
+      opener:"Every conversation about African investment eventually arrives at the same assumption: that the continent is capital-scarce, dependent on foreign inflows and therefore structurally fragile. This assumption is not just wrong. It is becoming more wrong every single year.",
+      body:"Africa's pension funds manage over $1.8 trillion in assets. Its sovereign wealth funds hold hundreds of billions more. The African diaspora sends $90 billion home annually, more than all foreign aid to the continent combined, year after year. The story is not that African capital does not exist. It is that the infrastructure to deploy it productively, the data platforms, the deal networks, the co-investment frameworks and the performance benchmarks, has been systematically underdeveloped. That is precisely what is changing. When the IFC, BII and Proparco together deployed over $4 billion into African deals in 2025, they were not filling a gap. They were building the scaffolding for a private capital market that African institutions will eventually own. Ranes Analytics exists because African investors, founders and institutions deserve the same quality of intelligence that their counterparts in New York, London and Singapore have always taken for granted. When African capital can see itself clearly, it moves. When it moves at scale, the returns do not need to be extracted. They stay.",
       pull:"The continent's greatest untapped capital pool is not sitting in a foreign fund waiting to be deployed. It is in African pension funds, family offices, and diaspora accounts — waiting for the right intelligence to move with confidence.",
       s1:"African diaspora remittances: $90B+ annually — more than total foreign aid to the continent", s1src:"World Bank 2024",
       s2:"African pension funds: $1.8 trillion in assets, less than 5% invested in African private equity", s2src:"AVCA Africa / World Bank",
@@ -1016,10 +1062,10 @@ function PanAfricanView({goToService}){
             <span style={{color:GD2}}>It never stopped being one.</span>
           </h1>
           <p style={{fontFamily:AN,fontSize:17,color:"rgba(255,255,255,0.68)",lineHeight:1.85,marginBottom:16,maxWidth:660}}>
-            While global capital chased its own correction, African entrepreneurs quietly rebuilt the continent's financial, energy, and logistics infrastructure — from the inside out. Closer to real problems. Faster than expected. With returns that are beginning to speak for themselves.
+            While global capital chased its own correction, African entrepreneurs quietly rebuilt the continent's financial, energy and logistics infrastructure from the inside out. Closer to real problems. Faster than expected. With returns that are beginning to speak for themselves.
           </p>
           <p style={{fontFamily:AN,fontSize:17,color:"rgba(255,255,255,0.68)",lineHeight:1.85,marginBottom:36,maxWidth:660}}>
-            Ranes Analytics tracks every significant deal, investor, and trend across the continent — so that the investors, founders, and institutions who are serious about Africa can act on evidence, not assumption.
+            Ranes Analytics tracks every significant deal, investor and trend across the continent so that the investors, founders and institutions who are serious about Africa can act on evidence, not assumption.
           </p>
           <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
             <button className="btn bp" style={{fontSize:14,padding:"13px 30px"}} onClick={()=>goToService("dashboard")}>Explore the data →</button>
@@ -1042,9 +1088,9 @@ function PanAfricanView({goToService}){
       <div style={{background:BG2,padding:"44px 48px",borderBottom:`1px solid ${BRD}`}}>
         <div style={{maxWidth:800,margin:"0 auto"}}>
           <p style={{fontFamily:AN,fontSize:20,color:TX,lineHeight:1.88,fontStyle:"italic",borderLeft:`4px solid ${M}`,paddingLeft:24}}>
-            "The most important investment thesis of this decade is not being written in a San Francisco term sheet. It is being written in the daily decisions of 1.4 billion people who are building the 21st century's most dynamic economies — often without reliable credit, often without stable power, always without excuses."
+            "The most important investment thesis of this decade is not being written in a San Francisco term sheet. It is being written in the daily decisions of 1.4 billion people who are building the 21st century's most dynamic economies, often without reliable credit, often without stable power, always without excuses."
           </p>
-          <div style={{fontFamily:AN,fontSize:12,color:TX3,marginTop:14,paddingLeft:24}}>Ranes Analytics · Editorial Position · 2026</div>
+          <div style={{fontFamily:AN,fontSize:12,color:TX3,marginTop:14,paddingLeft:24}}>Ranes Analytics, Editorial Position, 2026</div>
         </div>
       </div>
 
@@ -1059,7 +1105,7 @@ function PanAfricanView({goToService}){
             What most investors are still getting wrong about Africa
           </h2>
           <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8}}>
-            These are not investment categories. They are corrective lenses — five ways of seeing a continent that has been persistently underestimated, and is, with increasing consistency, persistently outperforming the assumptions made about it.
+            These are not investment categories. They are corrective lenses, five ways of seeing a continent that has been persistently underestimated and is, with increasing consistency, outperforming the assumptions made about it.
           </p>
         </div>
 
@@ -1114,22 +1160,22 @@ function PanAfricanView({goToService}){
             <span style={{fontFamily:AN,fontSize:10,fontWeight:700,color:N4,letterSpacing:3,textTransform:"uppercase"}}>Regional intelligence</span>
           </div>
           <h2 style={{fontFamily:AN,fontSize:32,fontWeight:700,color:TX,lineHeight:1.2,marginBottom:12}}>Three markets. One continental story.</h2>
-          <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8,maxWidth:620}}>The mistake is to treat these as competing destinations for the same capital. They are complementary — nodes in a single, accelerating system that grows stronger as the connections between them deepen.</p>
+          <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8,maxWidth:620}}>The mistake is to treat these as competing destinations for the same capital. They are complementary, nodes in a single accelerating system that grows stronger as the connections between them deepen.</p>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16}}>
           {[
             {region:"East Africa",flags:"🇰🇪🇹🇿🇺🇬🇷🇼",col:M,
               hed:"One ecosystem. Four flags.",
-              body:"M-Pesa didn't just change how Kenyans pay — it changed how the entire region thinks about financial infrastructure. When you invest in East African tech today, you're betting on a region that has been running the world's most ambitious mobile money experiment for nearly 20 years. The results are not contained within Kenya's borders.",
-              stat:"Kenya: $114M raised Q1 2026 · $610M total in 2025",act:"active"},
+              body:"M-Pesa did not just change how Kenyans pay. It changed how the entire region thinks about financial infrastructure. When you invest in East African tech today, you are betting on a region that has been running the world's most ambitious mobile money experiment for nearly 20 years. The results are not contained within Kenya's borders.",
+              stat:"Kenya: $114M raised Q1 2026, $610M total in 2025",act:"active"},
             {region:"West Africa",flags:"🇳🇬🇬🇭🇸🇳🇨🇮",col:N4,
               hed:"The continent's largest consumer market, in formation.",
-              body:"Nigeria's 220 million people set the volume. Ghana's regulatory environment runs the experiments. Senegal's Wave demonstrated the Francophone scale. Côte d'Ivoire's GoCab joined the mobility infrastructure together. ECOWAS is not 400 million separate consumers — it is one market learning, deal by deal, to act like one.",
-              stat:"Nigeria: $78M Q1 2026 · Côte d'Ivoire: $45M Q1 2026",act:"dashboard"},
+              body:"Nigeria's 220 million people set the volume. Ghana's regulatory environment runs the experiments. Senegal's Wave demonstrated the Francophone scale. Côte d'Ivoire's GoCab joined the mobility infrastructure together. ECOWAS is not 400 million separate consumers. It is one market learning, deal by deal, to act like one.",
+              stat:"Nigeria: $78M Q1 2026, Côte d'Ivoire: $45M Q1 2026",act:"dashboard"},
             {region:"North Africa",flags:"🇪🇬🇲🇦🇹🇳",col:"#1A6E3C",
               hed:"Egypt's fintech renaissance is teaching the continent.",
-              body:"Egypt's answer to financial exclusion — ValU, NowPay, MNT-Halan — was not borrowed from Silicon Valley. It was built from precise understanding of how 105 million people actually manage money: informally, in instalments, through layers of trust that no algorithm had mapped before. The model is now being studied across sub-Saharan Africa.",
-              stat:"Egypt: $190M raised Q1 2026 · +130% year-on-year growth in 2025",act:"deals"},
+              body:"Egypt's answer to financial exclusion through ValU, NowPay and MNT-Halan was not borrowed from Silicon Valley. It was built from precise understanding of how 105 million people actually manage money: informally, in instalments, through layers of trust that no algorithm had mapped before. The model is now being studied across sub-Saharan Africa.",
+              stat:"Egypt: $190M raised Q1 2026, +130% year-on-year growth in 2025",act:"deals"},
           ].map((r,i)=>(
             <div key={i} className="card" style={{padding:"26px",cursor:"pointer",borderTop:`3px solid ${r.col}`}} onClick={()=>goToService(r.act)}>
               <div style={{fontSize:20,marginBottom:12,letterSpacing:2}}>{r.flags}</div>
@@ -1147,16 +1193,16 @@ function PanAfricanView({goToService}){
         <div style={{maxWidth:760,margin:"0 auto 40px",textAlign:"center"}}>
           <h2 style={{fontFamily:AN,fontSize:30,fontWeight:700,color:WH,marginBottom:14}}>Ready to move from perspective to action?</h2>
           <p style={{fontFamily:AN,fontSize:15,color:"rgba(255,255,255,0.58)",lineHeight:1.8}}>
-            The editorial lens is just the beginning. Ranes Analytics gives you verified deal data, live fundraise intelligence, a 7-year historical dashboard, and an AI assistant that understands the African context as well as the numbers — all in one platform.
+            The editorial lens is just the beginning. Ranes Analytics gives you verified deal data, live fundraise intelligence, a 7-year historical dashboard and an AI assistant that understands the African context as well as the numbers, all in one platform.
           </p>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(190px,1fr))",gap:12,maxWidth:1040,margin:"0 auto"}}>
           {[
-            {id:"dashboard",icon:"◈",label:"Dashboard",desc:"7 years of verified funding data — filtered by year, country, sector, and deal type."},
-            {id:"active",icon:"🔴",label:"Active Deals",desc:"Companies actively raising right now — confidence scores, stage, and investor intelligence."},
-            {id:"deals",icon:"✅",label:"Deal Database",desc:"Every major deal from 2021 to Q1 2026. Searchable, sourced, and cross-verified."},
+            {id:"dashboard",icon:"◈",label:"Dashboard",desc:"7 years of verified funding data, filtered by year, country, sector and deal type."},
+            {id:"active",icon:"◉",label:"Active Deals",desc:"Companies actively raising right now, with confidence scores, stage and investor intelligence."},
+            {id:"deals",icon:"◇",label:"Deal Database",desc:"Every major deal from 2021 to Q1 2026. Searchable, sourced and cross-verified."},
             {id:"news",icon:"◫",label:"Intelligence Feed",desc:"The stories behind the numbers, from Africa's most trusted primary journalists and trackers."},
-            {id:"ai",icon:"⚡",label:"Ranes AI",desc:"Ask anything about African deals, investors, or trends. Grounded in data, not guesswork."},
+            {id:"ai",icon:"▶",label:"Ranes AI",desc:"Ask anything about African deals, investors or trends. Grounded in data, not guesswork."},
           ].map(s=>(
             <div key={s.id} onClick={()=>goToService(s.id)}
               style={{background:"rgba(255,255,255,0.055)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"20px 18px",cursor:"pointer",transition:"all 0.18s"}}
@@ -1198,18 +1244,18 @@ function ContactBox(){
   return(
     <div style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:10,padding:"24px 26px",marginBottom:6}}>
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
-        <span style={{fontSize:20}}>✉️</span>
+        <div style={{width:28,height:28,borderRadius:6,background:M,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:WH,fontSize:14,fontWeight:700}}>✉</span></div>
         <div>
           <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:WH}}>Get in Touch</div>
-          <div style={{fontFamily:AN,fontSize:12,color:"rgba(255,255,255,0.45)"}}>Questions, partnerships, feedback — we'd love to hear from you</div>
+          <div style={{fontFamily:AN,fontSize:12,color:"rgba(255,255,255,0.45)"}}>Questions, partnerships, feedback: we would love to hear from you</div>
         </div>
       </div>
       <div style={{height:1,background:"rgba(255,255,255,0.1)",margin:"14px 0"}}/>
       {sent?(
         <div style={{textAlign:"center",padding:"20px 0"}}>
-          <div style={{fontSize:28,marginBottom:8}}>✅</div>
-          <div style={{fontFamily:AN,fontSize:15,fontWeight:700,color:WH,marginBottom:4}}>Message opened in your mail client!</div>
-          <div style={{fontFamily:AN,fontSize:12,color:"rgba(255,255,255,0.45)"}}>Your message has been prepared — just hit send in your mail app.</div>
+          <div style={{fontSize:28,marginBottom:8,color:M}}>◈</div>
+          <div style={{fontFamily:AN,fontSize:15,fontWeight:700,color:WH,marginBottom:4}}>Message sent successfully!</div>
+          <div style={{fontFamily:AN,fontSize:12,color:"rgba(255,255,255,0.45)"}}>Your message has been prepared. Just hit send in your mail app to complete.</div>
           <button className="btn bo" style={{marginTop:14,fontSize:12}} onClick={()=>{setSent(false);setName("");setEmail("");setMsg("");}}>Send another</button>
         </div>
       ):(
@@ -1255,10 +1301,10 @@ export default function RanesAnalytics(){
 
   const SERVICES=[
     {id:"dashboard",label:"Dashboard",icon:"◈"},
-    {id:"active",label:"Active Deals",icon:"🔴",badge:true},
-    {id:"deals",label:"Deal Database",icon:"✅"},
+    {id:"active",label:"Active Deals",icon:"◉",badge:true},
+    {id:"deals",label:"Deal Database",icon:"◇"},
     {id:"news",label:"News",icon:"◫"},
-    {id:"ai",label:"Ranes AI",icon:"⚡"},
+    {id:"ai",label:"Ranes AI",icon:"▶"},
   ];
   const COMP={home:()=><PanAfricanView goToService={goToService}/>,dashboard:DashboardView,active:ActiveDealsView,deals:DealsView,news:NewsView,ai:AIView};
   const Active=COMP[view]||COMP.home;
@@ -1327,7 +1373,7 @@ export default function RanesAnalytics(){
               {[["2022 (Peak)","$5.0B"],["2021","$4.3B"],["2025","$3.2B"],["2019","$2.1B"],["2023","$2.9B"],["2024","$2.2B"],["Q1 2026","$0.71B"],["2020 (COVID)","$0.9B"]].map(([l,v])=>(<div key={l} style={{padding:"3px 14px",display:"flex",justifyContent:"space-between"}}><span style={{fontSize:10,color:"rgba(255,255,255,0.38)",fontFamily:AN}}>{l}</span><span style={{fontSize:10,fontWeight:700,color:M3,fontFamily:AN}}>{v}</span></div>))}
               <div className="divider"/>
               <div style={{padding:"12px",background:`${M}26`,borderRadius:7,border:`1px solid ${M}38`,margin:"4px 2px"}}>
-                <p style={{fontSize:12,fontWeight:700,color:M3,marginBottom:4,fontFamily:AN}}>⚡ Ask Ranes AI</p>
+                <p style={{fontSize:12,fontWeight:700,color:M3,marginBottom:4,fontFamily:AN}}>Ask Ranes AI</p>
                 <p style={{fontSize:11,color:"rgba(255,255,255,0.38)",lineHeight:1.5,marginBottom:8,fontFamily:AN}}>Query 7 years of African investment data</p>
                 <button className="btn bp" style={{width:"100%",justifyContent:"center",fontSize:11,padding:"7px"}} onClick={()=>setView("ai")}>Open Ranes AI</button>
               </div>
