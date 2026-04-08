@@ -1055,10 +1055,10 @@ function PanAfricanView({goToService}){
             <span style={{color:GD2}}>It never stopped being one.</span>
           </h1>
           <p style={{fontFamily:AN,fontSize:17,color:"rgba(255,255,255,0.68)",lineHeight:1.85,marginBottom:16,maxWidth:660}}>
-            While global capital chased its own correction, African entrepreneurs quietly rebuilt the continent's financial, energy, and logistics infrastructure — from the inside out. Closer to real problems. Faster than expected. With returns that are beginning to speak for themselves.
+            While global capital chased its own correction, African entrepreneurs quietly rebuilt the continent's financial, energy and logistics infrastructure from the inside out. Closer to real problems. Faster than expected. With returns that are beginning to speak for themselves.
           </p>
           <p style={{fontFamily:AN,fontSize:17,color:"rgba(255,255,255,0.68)",lineHeight:1.85,marginBottom:36,maxWidth:660}}>
-            Ranes Analytics tracks every significant deal, investor, and trend across the continent — so that the investors, founders, and institutions who are serious about Africa can act on evidence, not assumption.
+            Ranes Analytics tracks every significant deal, investor and trend across the continent so that the investors, founders and institutions who are serious about Africa can act on evidence, not assumption.
           </p>
           <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
             <button className="btn bp" style={{fontSize:14,padding:"13px 30px"}} onClick={()=>goToService("dashboard")}>Explore the data →</button>
@@ -1081,9 +1081,9 @@ function PanAfricanView({goToService}){
       <div style={{background:BG2,padding:"44px 48px",borderBottom:`1px solid ${BRD}`}}>
         <div style={{maxWidth:800,margin:"0 auto"}}>
           <p style={{fontFamily:AN,fontSize:20,color:TX,lineHeight:1.88,fontStyle:"italic",borderLeft:`4px solid ${M}`,paddingLeft:24}}>
-            "The most important investment thesis of this decade is not being written in a San Francisco term sheet. It is being written in the daily decisions of 1.4 billion people who are building the 21st century's most dynamic economies — often without reliable credit, often without stable power, always without excuses."
+            "The most important investment thesis of this decade is not being written in a San Francisco term sheet. It is being written in the daily decisions of 1.4 billion people who are building the 21st century's most dynamic economies, often without reliable credit, often without stable power, always without excuses."
           </p>
-          <div style={{fontFamily:AN,fontSize:12,color:TX3,marginTop:14,paddingLeft:24}}>Ranes Analytics · Editorial Position · 2026</div>
+          <div style={{fontFamily:AN,fontSize:12,color:TX3,marginTop:14,paddingLeft:24}}>Ranes Analytics, Editorial Position, 2026</div>
         </div>
       </div>
 
@@ -1098,7 +1098,7 @@ function PanAfricanView({goToService}){
             What most investors are still getting wrong about Africa
           </h2>
           <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8}}>
-            These are not investment categories. They are corrective lenses — five ways of seeing a continent that has been persistently underestimated, and is, with increasing consistency, persistently outperforming the assumptions made about it.
+            These are not investment categories. They are corrective lenses, five ways of seeing a continent that has been persistently underestimated and is, with increasing consistency, outperforming the assumptions made about it.
           </p>
         </div>
 
