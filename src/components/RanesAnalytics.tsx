@@ -905,13 +905,13 @@ function ActiveDealsView(){
       {/* Summary KPIs */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
         {[
-          ["🔴","Closing",ACTIVE_DEALS.filter(d=>d.status==="Closing").length+" deals","Actively closing rounds now"],
-          ["📢","Announced",ACTIVE_DEALS.filter(d=>d.status==="Announced").length+" deals","Publicly seeking capital"],
-          ["🔄","In-process",ACTIVE_DEALS.filter(d=>d.status==="In-process").length+" deals","Due diligence / discussions"],
-          ["💼","Total Pipeline","$"+ACTIVE_DEALS.reduce((a,d)=>{const v=parseFloat(d.range.split("–")[1].replace(/[^0-9.]/g,""));return a+v;},0).toFixed(0)+"M+","Combined target raise"],
+          ["◉","Closing",ACTIVE_DEALS.filter(d=>d.status==="Closing").length+" deals","Actively closing rounds now"],
+          ["◈","Announced",ACTIVE_DEALS.filter(d=>d.status==="Announced").length+" deals","Publicly seeking capital"],
+          ["◆","In-process",ACTIVE_DEALS.filter(d=>d.status==="In-process").length+" deals","Due diligence / discussions"],
+          ["■","Total Pipeline","$"+ACTIVE_DEALS.reduce((a,d)=>{const v=parseFloat(d.range.split("–")[1].replace(/[^0-9.]/g,""));return a+v;},0).toFixed(0)+"M+","Combined target raise"],
         ].map(([icon,label,val,sub])=>(
           <div key={label} className="card" style={{padding:"15px 16px"}}>
-            <div style={{fontSize:20,marginBottom:6}}>{icon}</div>
+            <div style={{fontSize:20,marginBottom:6,color:M,fontWeight:700}}>{icon}</div>
             <div style={{fontFamily:AN,fontSize:11,fontWeight:700,color:TX,textTransform:"uppercase",letterSpacing:0.5,marginBottom:2}}>{label}</div>
             <div style={{fontFamily:AN,fontSize:20,fontWeight:700,color:M,lineHeight:1}}>{val}</div>
             <div style={{fontSize:11,color:TX2,fontFamily:AN,marginTop:3}}>{sub}</div>
