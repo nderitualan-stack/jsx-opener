@@ -859,7 +859,7 @@ function NewsView(){
   const sc=s=>s==="positive"?"#1A6E3C":s==="negative"?"#C0392B":GD;
   return(
     <div className="fade-up" style={{display:"flex",flexDirection:"column",gap:16}}>
-      <div><h2 className="sh">Intelligence Feed</h2><p className="sh-sub">Verified primary sources · Click any headline to open the full article · Multi-year coverage</p></div>
+      <div><h2 className="sh">Intelligence Feed</h2><p className="sh-sub">Verified primary sources. Click any headline to open the full article. Multi-year coverage</p></div>
       <div style={{display:"flex",flexDirection:"column",gap:10}}>
         {NEWS.map((n,i)=>(
           <a key={i} href={n.url} target="_blank" rel="noreferrer" style={{textDecoration:"none",display:"block"}}>
@@ -891,7 +891,7 @@ function ActiveDealsView(){
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",flexWrap:"wrap",gap:12}}>
         <div>
           <h2 className="sh">Active Deals</h2>
-          <p className="sh-sub">Companies currently fundraising · Verified signals · Q1/Q2 2026 · For investor use</p>
+          <p className="sh-sub">Companies currently fundraising, verified signals, Q1/Q2 2026. For investor use</p>
         </div>
         <span className="badge bm" style={{fontSize:12,padding:"4px 12px"}}>{ACTIVE_DEALS.length} Live Opportunities</span>
       </div>
