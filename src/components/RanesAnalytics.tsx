@@ -1159,16 +1159,16 @@ function PanAfricanView({goToService}){
           {[
             {region:"East Africa",flags:"🇰🇪🇹🇿🇺🇬🇷🇼",col:M,
               hed:"One ecosystem. Four flags.",
-              body:"M-Pesa didn't just change how Kenyans pay — it changed how the entire region thinks about financial infrastructure. When you invest in East African tech today, you're betting on a region that has been running the world's most ambitious mobile money experiment for nearly 20 years. The results are not contained within Kenya's borders.",
-              stat:"Kenya: $114M raised Q1 2026 · $610M total in 2025",act:"active"},
+              body:"M-Pesa did not just change how Kenyans pay. It changed how the entire region thinks about financial infrastructure. When you invest in East African tech today, you are betting on a region that has been running the world's most ambitious mobile money experiment for nearly 20 years. The results are not contained within Kenya's borders.",
+              stat:"Kenya: $114M raised Q1 2026, $610M total in 2025",act:"active"},
             {region:"West Africa",flags:"🇳🇬🇬🇭🇸🇳🇨🇮",col:N4,
               hed:"The continent's largest consumer market, in formation.",
-              body:"Nigeria's 220 million people set the volume. Ghana's regulatory environment runs the experiments. Senegal's Wave demonstrated the Francophone scale. Côte d'Ivoire's GoCab joined the mobility infrastructure together. ECOWAS is not 400 million separate consumers — it is one market learning, deal by deal, to act like one.",
-              stat:"Nigeria: $78M Q1 2026 · Côte d'Ivoire: $45M Q1 2026",act:"dashboard"},
+              body:"Nigeria's 220 million people set the volume. Ghana's regulatory environment runs the experiments. Senegal's Wave demonstrated the Francophone scale. Côte d'Ivoire's GoCab joined the mobility infrastructure together. ECOWAS is not 400 million separate consumers. It is one market learning, deal by deal, to act like one.",
+              stat:"Nigeria: $78M Q1 2026, Côte d'Ivoire: $45M Q1 2026",act:"dashboard"},
             {region:"North Africa",flags:"🇪🇬🇲🇦🇹🇳",col:"#1A6E3C",
               hed:"Egypt's fintech renaissance is teaching the continent.",
-              body:"Egypt's answer to financial exclusion — ValU, NowPay, MNT-Halan — was not borrowed from Silicon Valley. It was built from precise understanding of how 105 million people actually manage money: informally, in instalments, through layers of trust that no algorithm had mapped before. The model is now being studied across sub-Saharan Africa.",
-              stat:"Egypt: $190M raised Q1 2026 · +130% year-on-year growth in 2025",act:"deals"},
+              body:"Egypt's answer to financial exclusion through ValU, NowPay and MNT-Halan was not borrowed from Silicon Valley. It was built from precise understanding of how 105 million people actually manage money: informally, in instalments, through layers of trust that no algorithm had mapped before. The model is now being studied across sub-Saharan Africa.",
+              stat:"Egypt: $190M raised Q1 2026, +130% year-on-year growth in 2025",act:"deals"},
           ].map((r,i)=>(
             <div key={i} className="card" style={{padding:"26px",cursor:"pointer",borderTop:`3px solid ${r.col}`}} onClick={()=>goToService(r.act)}>
               <div style={{fontSize:20,marginBottom:12,letterSpacing:2}}>{r.flags}</div>
@@ -1186,16 +1186,16 @@ function PanAfricanView({goToService}){
         <div style={{maxWidth:760,margin:"0 auto 40px",textAlign:"center"}}>
           <h2 style={{fontFamily:AN,fontSize:30,fontWeight:700,color:WH,marginBottom:14}}>Ready to move from perspective to action?</h2>
           <p style={{fontFamily:AN,fontSize:15,color:"rgba(255,255,255,0.58)",lineHeight:1.8}}>
-            The editorial lens is just the beginning. Ranes Analytics gives you verified deal data, live fundraise intelligence, a 7-year historical dashboard, and an AI assistant that understands the African context as well as the numbers — all in one platform.
+            The editorial lens is just the beginning. Ranes Analytics gives you verified deal data, live fundraise intelligence, a 7-year historical dashboard and an AI assistant that understands the African context as well as the numbers, all in one platform.
           </p>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(190px,1fr))",gap:12,maxWidth:1040,margin:"0 auto"}}>
           {[
-            {id:"dashboard",icon:"◈",label:"Dashboard",desc:"7 years of verified funding data — filtered by year, country, sector, and deal type."},
-            {id:"active",icon:"🔴",label:"Active Deals",desc:"Companies actively raising right now — confidence scores, stage, and investor intelligence."},
-            {id:"deals",icon:"✅",label:"Deal Database",desc:"Every major deal from 2021 to Q1 2026. Searchable, sourced, and cross-verified."},
+            {id:"dashboard",icon:"◈",label:"Dashboard",desc:"7 years of verified funding data, filtered by year, country, sector and deal type."},
+            {id:"active",icon:"◉",label:"Active Deals",desc:"Companies actively raising right now, with confidence scores, stage and investor intelligence."},
+            {id:"deals",icon:"◇",label:"Deal Database",desc:"Every major deal from 2021 to Q1 2026. Searchable, sourced and cross-verified."},
             {id:"news",icon:"◫",label:"Intelligence Feed",desc:"The stories behind the numbers, from Africa's most trusted primary journalists and trackers."},
-            {id:"ai",icon:"⚡",label:"Ranes AI",desc:"Ask anything about African deals, investors, or trends. Grounded in data, not guesswork."},
+            {id:"ai",icon:"▶",label:"Ranes AI",desc:"Ask anything about African deals, investors or trends. Grounded in data, not guesswork."},
           ].map(s=>(
             <div key={s.id} onClick={()=>goToService(s.id)}
               style={{background:"rgba(255,255,255,0.055)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"20px 18px",cursor:"pointer",transition:"all 0.18s"}}
