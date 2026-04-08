@@ -1153,7 +1153,7 @@ function PanAfricanView({goToService}){
             <span style={{fontFamily:AN,fontSize:10,fontWeight:700,color:N4,letterSpacing:3,textTransform:"uppercase"}}>Regional intelligence</span>
           </div>
           <h2 style={{fontFamily:AN,fontSize:32,fontWeight:700,color:TX,lineHeight:1.2,marginBottom:12}}>Three markets. One continental story.</h2>
-          <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8,maxWidth:620}}>The mistake is to treat these as competing destinations for the same capital. They are complementary — nodes in a single, accelerating system that grows stronger as the connections between them deepen.</p>
+          <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8,maxWidth:620}}>The mistake is to treat these as competing destinations for the same capital. They are complementary, nodes in a single accelerating system that grows stronger as the connections between them deepen.</p>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16}}>
           {[
