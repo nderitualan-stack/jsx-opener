@@ -1459,8 +1459,8 @@ export default function RanesAnalytics(){
         </div>
 
         {/* LAYOUT — no sidebar on homepage */}
-        {view==="home"?(
-          <div style={{maxWidth:"100%"}}><Active/></div>
+        {(view==="home"||view==="services")?(
+           <div style={{maxWidth:"100%"}}><Active/></div>
         ):(
           <div style={{maxWidth:1600,margin:"0 auto",padding:"22px 20px",display:"flex",gap:20}}>
           {/* SIDEBAR */}
