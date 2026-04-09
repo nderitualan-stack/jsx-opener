@@ -859,7 +859,7 @@ function NewsView(){
   const sc=s=>s==="positive"?"#1A6E3C":s==="negative"?"#C0392B":GD;
   return(
     <div className="fade-up" style={{display:"flex",flexDirection:"column",gap:16}}>
-      <div><h2 className="sh">Intelligence Feed</h2><p className="sh-sub">Verified primary sources. Click any headline to open the full article. Multi-year coverage</p></div>
+      <div><h2 className="sh">Intelligence Feed</h2><p className="sh-sub">Stories that shape African investment decisions. Click any headline for the full article</p></div>
       <div style={{display:"flex",flexDirection:"column",gap:10}}>
         {NEWS.map((n,i)=>(
           <a key={i} href={n.url} target="_blank" rel="noreferrer" style={{textDecoration:"none",display:"block"}}>
@@ -891,7 +891,7 @@ function ActiveDealsView(){
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",flexWrap:"wrap",gap:12}}>
         <div>
           <h2 className="sh">Active Deals</h2>
-          <p className="sh-sub">Companies currently fundraising, verified signals, Q1/Q2 2026. For investor use</p>
+           <p className="sh-sub">Companies currently fundraising with verified signals. Use this to evaluate live opportunities or benchmark your own raise</p>
         </div>
         <span className="badge bm" style={{fontSize:12,padding:"4px 12px"}}>{ACTIVE_DEALS.length} Live Opportunities</span>
       </div>
@@ -978,11 +978,17 @@ function ActiveDealsView(){
         ))}
       </div>
 
-      {/* Founder note — no button, just informational */}
-      <div style={{background:N_BG,border:`1px solid ${N4}33`,borderRadius:8,padding:"16px 20px"}}>
-        <div style={{fontFamily:AN,fontSize:13,fontWeight:700,color:TX,marginBottom:3}}>For Founders</div>
-        <p style={{fontSize:13,color:TX2,fontFamily:AN,lineHeight:1.65}}>Deal intelligence on this page is sourced from verified public announcements. Use the contact form below to reach the Ranes Analytics team for further enquiries.</p>
-      </div>
+      {/* Dual audience note */}
+       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+         <div style={{background:M_BG,border:`1px solid ${M}33`,borderRadius:8,padding:"16px 20px"}}>
+           <div style={{fontFamily:AN,fontSize:13,fontWeight:700,color:M,marginBottom:3}}>For Founders</div>
+           <p style={{fontSize:13,color:TX2,fontFamily:AN,lineHeight:1.65}}>Preparing to raise? See how current rounds are structured and priced to position your own raise competitively.</p>
+         </div>
+         <div style={{background:N_BG,border:`1px solid ${N4}33`,borderRadius:8,padding:"16px 20px"}}>
+           <div style={{fontFamily:AN,fontSize:13,fontWeight:700,color:N4,marginBottom:3}}>For Investors</div>
+           <p style={{fontSize:13,color:TX2,fontFamily:AN,lineHeight:1.65}}>Evaluating opportunities? Use confidence scores and stage data to prioritise your pipeline and accelerate due diligence.</p>
+         </div>
+       </div>
     </div>
   );
 }
@@ -1062,10 +1068,10 @@ function PanAfricanView({goToService}){
             <span style={{color:GD2}}>It never stopped being one.</span>
           </h1>
           <p style={{fontFamily:AN,fontSize:17,color:"rgba(255,255,255,0.68)",lineHeight:1.85,marginBottom:16,maxWidth:660}}>
-            While global capital chased its own correction, African entrepreneurs quietly rebuilt the continent's financial, energy and logistics infrastructure from the inside out. Closer to real problems. Faster than expected. With returns that are beginning to speak for themselves.
+            While global capital chased its own correction, African entrepreneurs quietly rebuilt the continent's financial, energy and logistics infrastructure from the inside out. Closer to real problems, faster than expected and with returns that speak for themselves.
           </p>
           <p style={{fontFamily:AN,fontSize:17,color:"rgba(255,255,255,0.68)",lineHeight:1.85,marginBottom:36,maxWidth:660}}>
-            Ranes Analytics tracks every significant deal, investor and trend across the continent so that the investors, founders and institutions who are serious about Africa can act on evidence, not assumption.
+            Ranes Analytics tracks every significant deal, investor and trend across the continent so that founders raising capital and investors deploying it can act on evidence, not assumption.
           </p>
           <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
             <button className="btn bp" style={{fontSize:14,padding:"13px 30px"}} onClick={()=>goToService("dashboard")}>Explore the data →</button>
@@ -1088,8 +1094,8 @@ function PanAfricanView({goToService}){
       <div style={{background:BG2,padding:"44px 48px",borderBottom:`1px solid ${BRD}`}}>
         <div style={{maxWidth:800,margin:"0 auto"}}>
           <p style={{fontFamily:AN,fontSize:20,color:TX,lineHeight:1.88,fontStyle:"italic",borderLeft:`4px solid ${M}`,paddingLeft:24}}>
-            "The most important investment thesis of this decade is not being written in a San Francisco term sheet. It is being written in the daily decisions of 1.4 billion people who are building the 21st century's most dynamic economies, often without reliable credit, often without stable power, always without excuses."
-          </p>
+             "The most important investment thesis of this decade is not being drafted in San Francisco. It is being written in the daily decisions of 1.4 billion people building the 21st century's most dynamic economies, often without reliable credit, often without stable power and always without excuses."
+           </p>
           <div style={{fontFamily:AN,fontSize:12,color:TX3,marginTop:14,paddingLeft:24}}>Ranes Analytics, Editorial Position, 2026</div>
         </div>
       </div>
@@ -1104,9 +1110,9 @@ function PanAfricanView({goToService}){
           <h2 style={{fontFamily:AN,fontSize:34,fontWeight:700,color:TX,lineHeight:1.18,marginBottom:14}}>
             What most investors are still getting wrong about Africa
           </h2>
-          <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8}}>
-            These are not investment categories. They are corrective lenses, five ways of seeing a continent that has been persistently underestimated and is, with increasing consistency, outperforming the assumptions made about it.
-          </p>
+         <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8}}>
+             These are not investment categories. They are corrective lenses, five ways of seeing a continent that has been persistently underestimated and is now outperforming the assumptions made about it.
+           </p>
         </div>
 
         <div style={{display:"flex",flexDirection:"column"}}>
@@ -1191,10 +1197,11 @@ function PanAfricanView({goToService}){
       {/* ── SERVICES CTA ───────────────────────── */}
       <div style={{background:N2,padding:"56px 48px"}}>
         <div style={{maxWidth:760,margin:"0 auto 40px",textAlign:"center"}}>
-          <h2 style={{fontFamily:AN,fontSize:30,fontWeight:700,color:WH,marginBottom:14}}>Ready to move from perspective to action?</h2>
+          <h2 style={{fontFamily:AN,fontSize:30,fontWeight:700,color:WH,marginBottom:14}}>Your next move starts here.</h2>
           <p style={{fontFamily:AN,fontSize:15,color:"rgba(255,255,255,0.58)",lineHeight:1.8}}>
-            The editorial lens is just the beginning. Ranes Analytics gives you verified deal data, live fundraise intelligence, a 7-year historical dashboard and an AI assistant that understands the African context as well as the numbers, all in one platform.
+            Whether you are a founder preparing to raise or an investor evaluating African deal flow, Ranes Analytics gives you the data, intelligence and advisory support to act with confidence.
           </p>
+          <button className="btn bp" style={{fontSize:13,padding:"11px 26px",marginTop:20}} onClick={()=>goToService("services")}>View our advisory services →</button>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(190px,1fr))",gap:12,maxWidth:1040,margin:"0 auto"}}>
           {[
@@ -1220,6 +1227,101 @@ function PanAfricanView({goToService}){
   );
 }
 
+
+/* ════════════════════════════════════════════════════════════
+   SERVICES VIEW — Advisory for Startups & Investors
+════════════════════════════════════════════════════════════ */
+function ServicesView({goToContact}){
+  const FOUNDER_SERVICES=[
+    {icon:"◈",title:"Capital Raising Strategy",desc:"We help you define the right raise amount, instrument and timeline based on your stage, traction and market context. You get a clear plan that makes sense to investors and protects your equity."},
+    {icon:"◆",title:"Investor-Ready Documentation",desc:"From financial projections and use-of-proceeds breakdowns to cap tables and investment memoranda, we prepare the materials that give investors confidence to move forward."},
+    {icon:"▲",title:"Transaction Structuring",desc:"We structure deals that balance your need to retain meaningful ownership with investor expectations on returns, ensuring the terms work for both sides over the long term."},
+    {icon:"◉",title:"Due Diligence Coordination",desc:"We manage the back-and-forth of due diligence so you can stay focused on running your business. Timelines stay tight and investor communications stay professional."},
+    {icon:"■",title:"Benchmarking & Unit Economics",desc:"We benchmark your CAC, retention, margins and unit economics against comparable companies in your sector so your investment case is grounded in real data, not projections alone."},
+  ];
+  const INVESTOR_SERVICES=[
+    {icon:"◈",title:"Deal Sourcing Intelligence",desc:"Access verified deal flow across 54 African markets with confidence scores, sector analysis and stage-level filtering so you spend time on opportunities that match your thesis."},
+    {icon:"◆",title:"Due Diligence Support",desc:"We provide sector benchmarks, comparable transaction data and market context reports that help you evaluate companies faster and with greater accuracy."},
+    {icon:"▲",title:"Market Entry Guidance",desc:"For investors new to African markets, we provide regulatory landscape overviews, local co-investor introductions and risk-adjusted return frameworks tailored to each region."},
+    {icon:"◉",title:"Portfolio Monitoring Data",desc:"Track how your portfolio companies compare against sector peers on key metrics including growth rates, burn efficiency and market share within the Ranes Analytics platform."},
+  ];
+
+  return(
+    <div className="fade-up" style={{display:"flex",flexDirection:"column",gap:0}}>
+      {/* Header */}
+      <div style={{background:`linear-gradient(155deg,${N} 0%,${N2} 45%,${M5} 100%)`,padding:"52px 48px 44px",position:"relative"}}>
+        <div style={{position:"absolute",inset:0,opacity:0.03,backgroundImage:"radial-gradient(circle, #fff 1px, transparent 1px)",backgroundSize:"52px 52px"}}/>
+        <div style={{position:"relative",maxWidth:760}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
+            <div style={{height:2,width:28,background:M3,borderRadius:1}}/>
+            <span style={{fontFamily:AN,fontSize:10,fontWeight:700,color:M3,letterSpacing:3,textTransform:"uppercase"}}>Ranes Analytics · Advisory Services</span>
+          </div>
+          <h1 style={{fontFamily:AN,fontSize:42,fontWeight:700,color:WH,lineHeight:1.12,marginBottom:20}}>
+            Built for founders raising capital<br/>
+            <span style={{color:GD2}}>and investors deploying it.</span>
+          </h1>
+          <p style={{fontFamily:AN,fontSize:16,color:"rgba(255,255,255,0.65)",lineHeight:1.85,maxWidth:620}}>
+            Whether you are preparing for your next fundraise or evaluating your next investment, Ranes Analytics provides the intelligence and advisory support you need to move with confidence in African markets.
+          </p>
+        </div>
+      </div>
+
+      {/* For Founders */}
+      <div style={{padding:"48px",background:WH}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:14}}>
+          <div style={{height:2,width:28,background:M,borderRadius:1}}/>
+          <span style={{fontFamily:AN,fontSize:10,fontWeight:700,color:M,letterSpacing:3,textTransform:"uppercase"}}>For Founders & Growth-Stage Companies</span>
+        </div>
+        <h2 style={{fontFamily:AN,fontSize:28,fontWeight:700,color:TX,lineHeight:1.2,marginBottom:10}}>Raise smarter, not just faster.</h2>
+        <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8,marginBottom:32,maxWidth:640}}>
+          You have built something real. The next step is presenting it in a way that attracts the right capital on the right terms. We work alongside you from strategy through to close.
+        </p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:16}}>
+          {FOUNDER_SERVICES.map((s,i)=>(
+            <div key={i} className="card" style={{padding:"24px",borderTop:`3px solid ${M}`}}>
+              <div style={{fontSize:20,marginBottom:12,color:M,fontWeight:700}}>{s.icon}</div>
+              <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:8}}>{s.title}</div>
+              <p style={{fontFamily:AN,fontSize:13,color:TX2,lineHeight:1.75}}>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* For Investors */}
+      <div style={{padding:"48px",background:BG2,borderTop:`1px solid ${BRD}`}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:14}}>
+          <div style={{height:2,width:28,background:N4,borderRadius:1}}/>
+          <span style={{fontFamily:AN,fontSize:10,fontWeight:700,color:N4,letterSpacing:3,textTransform:"uppercase"}}>For Investors & Institutions</span>
+        </div>
+        <h2 style={{fontFamily:AN,fontSize:28,fontWeight:700,color:TX,lineHeight:1.2,marginBottom:10}}>See Africa's deal landscape clearly.</h2>
+        <p style={{fontFamily:AN,fontSize:15,color:TX2,lineHeight:1.8,marginBottom:32,maxWidth:640}}>
+          African markets reward investors who combine conviction with context. We provide the data infrastructure and market intelligence that turns interest into informed action.
+        </p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:16}}>
+          {INVESTOR_SERVICES.map((s,i)=>(
+            <div key={i} className="card" style={{padding:"24px",borderTop:`3px solid ${N4}`}}>
+              <div style={{fontSize:20,marginBottom:12,color:N4,fontWeight:700}}>{s.icon}</div>
+              <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:8}}>{s.title}</div>
+              <p style={{fontFamily:AN,fontSize:13,color:TX2,lineHeight:1.75}}>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA to Contact */}
+      <div style={{background:`linear-gradient(155deg,${M5} 0%,${M} 50%,${N2} 100%)`,padding:"44px 48px",textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:14,color:GD2}}>◈</div>
+        <h3 style={{fontFamily:AN,fontSize:24,fontWeight:700,color:WH,marginBottom:10}}>Interested in working with us?</h3>
+        <p style={{fontFamily:AN,fontSize:14,color:"rgba(255,255,255,0.6)",lineHeight:1.8,marginBottom:24,maxWidth:480,margin:"0 auto 24px"}}>
+          Tell us about your company or investment focus and we will follow up with a tailored conversation. Use the contact form below to get started.
+        </p>
+        <button className="btn bp" style={{fontSize:14,padding:"13px 30px"}} onClick={goToContact}>
+          Go to Contact Form ↓
+        </button>
+      </div>
+    </div>
+  );
+}
 
 /* ════════════════════════════════════════════════════════════
    CONTACT BOX
@@ -1306,7 +1408,7 @@ export default function RanesAnalytics(){
     {id:"news",label:"News",icon:"◫"},
     {id:"ai",label:"Ranes AI",icon:"▶"},
   ];
-  const COMP={home:()=><PanAfricanView goToService={goToService}/>,dashboard:DashboardView,active:ActiveDealsView,deals:DealsView,news:NewsView,ai:AIView};
+  const COMP={home:()=><PanAfricanView goToService={goToService}/>,dashboard:DashboardView,active:ActiveDealsView,deals:DealsView,news:NewsView,ai:AIView,services:()=><ServicesView goToContact={()=>{setView("home");setTimeout(()=>{const el=document.getElementById("contact-section");if(el)el.scrollIntoView({behavior:"smooth"});},300);}}/>};
   const Active=COMP[view]||COMP.home;
   const sres=srch.length>1?ALL_DEALS.filter(d=>d.company.toLowerCase().includes(srch.toLowerCase())||d.sector.toLowerCase().includes(srch.toLowerCase())||d.country.toLowerCase().includes(srch.toLowerCase())).slice(0,6):[];
   // Ticker: Q1 2026 confirmed deals only (most recent)
@@ -1326,7 +1428,7 @@ export default function RanesAnalytics(){
             <button onClick={()=>setView("home")} className={`nav-btn ${view==="home"?"on":""}`}>Home</button>
             {/* Services divider */}
             <div style={{width:1,height:18,background:"rgba(255,255,255,0.15)",margin:"0 4px"}}/>
-            <span style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.3)",letterSpacing:1.5,textTransform:"uppercase",fontFamily:AN,paddingRight:4}}>Services</span>
+            <button onClick={()=>setView("services")} className={`nav-btn ${view==="services"?"on":""}`} style={{fontSize:10,letterSpacing:1.5}}>Services</button>
             <div style={{display:"flex",gap:1,flex:1,overflow:"hidden"}}>
               {SERVICES.map(v=>(
                 <button key={v.id} onClick={()=>setView(v.id)} className={`nav-btn ${view===v.id?"on":""}`}>
@@ -1357,8 +1459,8 @@ export default function RanesAnalytics(){
         </div>
 
         {/* LAYOUT — no sidebar on homepage */}
-        {view==="home"?(
-          <div style={{maxWidth:"100%"}}><Active/></div>
+        {(view==="home"||view==="services")?(
+           <div style={{maxWidth:"100%"}}><Active/></div>
         ):(
           <div style={{maxWidth:1600,margin:"0 auto",padding:"22px 20px",display:"flex",gap:20}}>
           {/* SIDEBAR */}
@@ -1390,10 +1492,11 @@ export default function RanesAnalytics(){
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:20,flexWrap:"wrap",gap:20}}>
               <div><LogoLockup onClick={()=>setView("home")} onDark/><p style={{fontSize:12,color:"rgba(255,255,255,0.36)",maxWidth:210,lineHeight:1.65,marginTop:10,fontFamily:AN}}>Africa's investment intelligence platform. 2019 to Q1 2026.</p></div>
               <div style={{display:"flex",gap:36,flexWrap:"wrap"}}>
-                <div>
-                  <div style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.55)",letterSpacing:1,textTransform:"uppercase",marginBottom:10,fontFamily:AN}}>Platform</div>
-                  <div style={{marginBottom:6}}><button className="fl" onClick={()=>setView("home")}>Home</button></div>
-                  {SERVICES.map(v=><div key={v.id} style={{marginBottom:6}}><button className="fl" onClick={()=>setView(v.id)}>{v.label}</button></div>)}
+                 <div>
+                   <div style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.55)",letterSpacing:1,textTransform:"uppercase",marginBottom:10,fontFamily:AN}}>Platform</div>
+                   <div style={{marginBottom:6}}><button className="fl" onClick={()=>setView("home")}>Home</button></div>
+                   <div style={{marginBottom:6}}><button className="fl" onClick={()=>setView("services")}>Services</button></div>
+                   {SERVICES.map(v=><div key={v.id} style={{marginBottom:6}}><button className="fl" onClick={()=>setView(v.id)}>{v.label}</button></div>)}
                 </div>
                 <div>
                   <div style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.55)",letterSpacing:1,textTransform:"uppercase",marginBottom:10,fontFamily:AN}}>Legal</div>
@@ -1402,7 +1505,7 @@ export default function RanesAnalytics(){
               </div>
             </div>
             {/* ── CONTACT BOX ── */}
-            <ContactBox/>
+             <div id="contact-section"><ContactBox/></div>
 
             <div style={{height:1,background:"rgba(255,255,255,0.1)",margin:"20px 0 14px"}}/>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12}}>
