@@ -815,18 +815,18 @@ function AIView(){
     const history=[...msgs,{role:"user",content:q}];
     setMsgs(history);setInput("");setLoading(true);
     try{
-      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:900,system:AI_SYS,messages:history.map(m=>({role:m.role,content:m.content}))})});
+      const res=await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ranes-chat`,{method:"POST",headers:{"Content-Type":"application/json","Authorization":`Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`},body:JSON.stringify({messages:history.map(m=>({role:m.role,content:m.content}))})});
       let data;try{data=await res.json();}catch{throw new Error("Response parse error.");}
-      if(data?.type==="exceeded_limit"||data?.error?.type==="exceeded_limit"){
-        const rt=data?.resetsAt?`Resets at ${fmtTime(data.resetsAt)}`:"Resets soon";
-        setSysNote(`⏱️ Rate limit — ${rt}`);
-        setMsgs(p=>[...p,{role:"assistant",content:`Rate limited (${rt}). From the Ranes Analytics database:\n\n${FALLBACK(q)}`}]);
+      if(res.status===429){
+        setSysNote("⏱️ Rate limited, please wait a moment");
+        setMsgs(p=>[...p,{role:"assistant",content:`Rate limited. From the Ranes Analytics database:\n\n${FALLBACK(q)}`}]);
         setLoading(false);return;
       }
-      if(!res.ok){const em=data?.error?.message||`Error ${res.status}`;setMsgs(p=>[...p,{role:"assistant",content:`⚠️ **${em}**\n\n${FALLBACK(q)}`}]);setLoading(false);return;}
-      const text=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+      if(!res.ok){const em=data?.error||`Error ${res.status}`;setMsgs(p=>[...p,{role:"assistant",content:`⚠️ **${em}**\n\n${FALLBACK(q)}`}]);setLoading(false);return;}
+      const text=data.content||"";
       setMsgs(p=>[...p,{role:"assistant",content:text||"Please try rephrasing."}]);
     }catch{setMsgs(p=>[...p,{role:"assistant",content:`⚠️ Connection issue.\n\n${FALLBACK(q)}`}]);}
+
     setLoading(false);setTimeout(()=>inp.current?.focus(),80);
   };
   const md=t=>t.replace(/\*\*(.*?)\*\*/g,`<strong style="color:${TX}">$1</strong>`).replace(/•\s/g,`<span style="color:${M};font-weight:700">• </span>`).replace(/\n/g,"<br/>");
