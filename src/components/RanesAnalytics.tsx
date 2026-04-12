@@ -1114,7 +1114,7 @@ export default function RanesAnalytics(){
   const [modal,setModal]=useState<string|null>(null);
   const [drawerOpen,setDrawerOpen]=useState(false);
   const [mobileSearch,setMobileSearch]=useState(false);
-  const goTo=useCallback((id:string)=>setView(id),[]);
+  const goTo=useCallback((id:string)=>{setView(id);window.scrollTo({top:0,behavior:"smooth"});},[]);
 
   const NAV_ITEMS=[
     {id:"services",label:"Services",icon:"svc",isServices:true},
