@@ -873,13 +873,41 @@ function AIView(){
   );
 }
 
+/* ─── TREND ARROW ──────────────────────────────────────── */
+function TrendArrow({value,suffix="%"}:{value:number;suffix?:string}){
+  const col=value>0?"#1A6E3C":value<0?"#C0392B":TX3;
+  const arrow=value>0?"↑":value<0?"↓":"→";
+  return <span style={{fontFamily:AN,fontSize:12,fontWeight:700,color:col}}>{arrow}{Math.abs(value)}{suffix}</span>;
+}
+
+/* ─── CIRCULAR GAUGE ──────────────────────────────────── */
+function CircularGauge({score,label,color,size=120}:{score:number;label:string;color:string;size?:number}){
+  const r=size/2-10,circ=2*Math.PI*r,offset=circ-(score/100)*circ;
+  return(
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:6}}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={BRD} strokeWidth="8"/>
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth="8" strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round" transform={`rotate(-90 ${size/2} ${size/2})`} style={{transition:"stroke-dashoffset 0.8s ease"}}/>
+        <text x={size/2} y={size/2-6} textAnchor="middle" style={{fontSize:size/4,fontWeight:700,fill:color,fontFamily:AN}}>{score}</text>
+        <text x={size/2} y={size/2+14} textAnchor="middle" style={{fontSize:10,fill:TX2,fontFamily:AN}}>{label}</text>
+      </svg>
+    </div>
+  );
+}
+
 /* ─── DASHBOARD ────────────────────────────────────────── */
 function DashboardView(){
   const isMobile=useIsMobile();
+  const [dashTab,setDashTab]=useState("overview");
   const [period,setPeriod]=useState("annual");
   const [yearRange,setYearRange]=useState([2019,2026]);
   const [sectorF,setSectorF]=useState("All");
   const [countryF,setCountryF]=useState("All");
+  /* Founder readiness state */
+  const [frSector,setFrSector]=useState("Fintech");
+  const [frStage,setFrStage]=useState("Series A");
+  const [frGeo,setFrGeo]=useState("Kenya");
+
   const YEARS=["2019","2020","2021","2022","2023","2024","2025","2026"];
   const annualFiltered=ANNUAL.filter(d=>{const y=parseInt(d.year);return y>=yearRange[0]&&y<=yearRange[1];});
   const quarterlyFiltered=QUARTERLY.filter(d=>d.year>=yearRange[0]&&d.year<=yearRange[1]);
@@ -901,83 +929,422 @@ function DashboardView(){
   const totalInRange=annualFiltered.reduce((a,d)=>a+(parseInt(d.year)<2026?d.total:0),0)+(yearRange[1]>=2026?711:0);
   const CT=({active,payload,label}:any)=>{if(!active||!payload?.length)return null;return(<div style={{background:WH,border:`1px solid ${BRD}`,borderRadius:8,padding:"10px 14px",fontSize:12,fontFamily:AN}}><p style={{color:TX2,fontSize:11,marginBottom:5}}>{label}</p>{payload.map((p:any,i:number)=><p key={i} style={{color:p.color||TX,fontWeight:700}}>${p.value}M <span style={{color:TX2,fontWeight:400}}>{p.name}</span></p>)}</div>);};
 
+  const momentum=useMemo(()=>computeMomentum(),[]);
+  const concentration=useMemo(()=>computeConcentration(),[]);
+  const narrative=useMemo(()=>generateNarrative(sectorF,countryF,yearRange),[sectorF,countryF,yearRange]);
+  const readiness=useMemo(()=>computeFounderReadiness(frSector,frStage,frGeo),[frSector,frStage,frGeo]);
+
+  /* ─── Insight Banner ─── */
+  const insightBanner=useMemo(()=>{
+    const topMover=momentum.sectorMomentum[0];
+    const biggest=concentration.topDeals[0];
+    return `Biggest shift: ${topMover.sector} up ${topMover.yoy}% YoY to $${topMover.y2025}M in 2025. Q1 2026 pace: $${topMover.q1_26}M. Top Q1 deal: ${biggest?.company} ($${biggest?.amount}M). Debt is now 57% of Q1 capital — a historic first.`;
+  },[momentum,concentration]);
+
+  const DASH_TABS=[
+    {id:"overview",label:"Market Overview"},
+    {id:"investor",label:"Investor Intelligence"},
+    {id:"founder",label:"Founder Tools"},
+    {id:"compare",label:"Country Compare"},
+  ];
+
   return(
     <div className="fade-up" style={{display:"flex",flexDirection:"column",gap:20}}>
-      <div style={{background:"#F0FAF4",border:"1px solid #1A6E3C33",borderRadius:8,padding:"10px 16px",display:"flex",gap:10,alignItems:"center",flexWrap:"wrap"}}>
-        <div style={{width:8,height:8,borderRadius:"50%",background:"#1A6E3C",flexShrink:0}}/>
-        <span style={{fontSize:12,color:TX2,fontFamily:AN}}><strong style={{color:TX}}>Verified Q1 2026 Data</strong> , TechCabal Insights · Condia · LaunchBase Africa · Africa: The Big Deal · Synced Apr 2026</span>
-      </div>
-      <div className="card" style={{padding:isMobile?"14px":"18px 20px"}}>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:14,marginBottom:16}}>
-          <div><div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:3}}>Time Range &amp; Filters</div><p style={{fontSize:12,color:TX2,fontFamily:AN}}>Select any period from 2019 to Q1 2026</p></div>
-          <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>{["annual","quarterly","monthly"].map(p=>(<button key={p} className={`pill ${period===p?"on":""}`} onClick={()=>setPeriod(p)} style={{textTransform:"capitalize"}}>{p}</button>))}</div>
+      {/* Insight of the Week Banner */}
+      <div style={{background:`linear-gradient(135deg,${M}12,${N_BG})`,border:`1px solid ${M}33`,borderRadius:10,padding:"14px 18px",display:"flex",gap:12,alignItems:"flex-start"}}>
+        <div style={{width:36,height:36,borderRadius:8,background:M,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v2M9 14v2M2 9h2M14 9h2M4.2 4.2l1.4 1.4M12.4 12.4l1.4 1.4M4.2 13.8l1.4-1.4M12.4 5.6l1.4-1.4" stroke="#fff" strokeWidth="1.4" strokeLinecap="round"/><circle cx="9" cy="9" r="3" fill="#fff" opacity="0.8"/></svg>
         </div>
-        {period==="annual"&&(<><div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:8}}><span style={{fontSize:11,color:TX2,fontFamily:AN,marginRight:4,alignSelf:"center"}}>From:</span>{YEARS.slice(0,-1).map(y=>(<button key={y} className={`pill ${yearRange[0]===parseInt(y)?"on":""}`} onClick={()=>setYearRange([parseInt(y),Math.max(parseInt(y),yearRange[1])])}>{y}</button>))}</div><div style={{display:"flex",gap:6,flexWrap:"wrap"}}><span style={{fontSize:11,color:TX2,fontFamily:AN,marginRight:4,alignSelf:"center"}}>To:</span>{YEARS.map(y=>(<button key={y} className={`pill ${yearRange[1]===parseInt(y)?"on":""}`} onClick={()=>setYearRange([Math.min(yearRange[0],parseInt(y)),parseInt(y)])}>{y==="2026"?"2026 (Q1)":y}</button>))}</div></>)}
-        {/* Filter summary strip per audit #6 */}
-        <div style={{background:BG2,border:`1px solid ${BRD}`,borderRadius:6,padding:"8px 14px",marginTop:12,fontFamily:AN,fontSize:12,color:TX2,display:"flex",gap:12,flexWrap:"wrap",alignItems:"center"}}>
-          <span><strong style={{color:TX}}>Selected:</strong> {yearRange[0]}–{yearRange[1]}</span>
-          <span>·</span>
-          <span style={{color:M,fontWeight:700}}>${(totalInRange/1000).toFixed(1)}B</span>
-          <span>across {annualFiltered.reduce((a,d)=>a+d.deals,0).toLocaleString()} deals</span>
-          <span>· {yearRange[1]-yearRange[0]+1} year{yearRange[1]-yearRange[0]>0?"s":""}</span>
-        </div>
-        <div style={{display:"flex",gap:12,marginTop:14,flexWrap:"wrap",alignItems:"center"}}>
-          <div><span style={{fontSize:11,color:TX2,fontFamily:AN,marginRight:6}}>Sector:</span><select value={sectorF} onChange={e=>setSectorF(e.target.value)} style={{minWidth:130,padding:"5px 10px",fontSize:12}}>{SECTORS_LIST.map(s=><option key={s}>{s}</option>)}</select></div>
-          <div><span style={{fontSize:11,color:TX2,fontFamily:AN,marginRight:6}}>Country:</span><select value={countryF} onChange={e=>setCountryF(e.target.value)} style={{minWidth:130,padding:"5px 10px",fontSize:12}}>{COUNTRIES_LIST.map(c=><option key={c}>{c}</option>)}</select></div>
-          {(sectorF!=="All"||countryF!=="All")&&(<><button className="btn bo" style={{fontSize:11,padding:"5px 12px"}} onClick={()=>{setSectorF("All");setCountryF("All");}}>Clear filters</button><span className="badge b-type-equity">{dealsFiltered.length} deals · ${totalFiltered.toFixed(0)}M</span></>)}
+        <div style={{flex:1}}>
+          <div style={{fontFamily:AN,fontSize:10,fontWeight:700,color:M,letterSpacing:1.5,textTransform:"uppercase",marginBottom:4}}>What Changed · Q1 2026</div>
+          <p style={{fontFamily:AN,fontSize:13,color:TX,lineHeight:1.65}}>{insightBanner}</p>
         </div>
       </div>
-      {/* KPI grid with 2 hero cards + 6 supporting per audit #10 */}
-      <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr 1fr":"1fr 1fr 1fr 1fr",gap:12}}>
-        {[
-          {icon:"money",val:`$${(totalInRange/1000).toFixed(1)}B`,label:"Total in Range",sub:`${yearRange[0]}–${yearRange[1]}`,src:`${annualFiltered.length} year(s)`,hero:true},
-          {icon:"peak",val:peakYear?.year||"2022",label:"Peak Year",sub:`$${peakYear?.total||5000}M raised`,src:"Africa: The Big Deal",hero:true},
-          {icon:"cal",val:"2019–Q1 2026",label:"Full Dataset",sub:"7-year coverage",src:"Africa:TBD"},
-          {icon:"up",val:"$3.2B",label:"2025 Rebound",sub:"+40% year on year",src:"Technext24"},
-          {icon:"down",val:"$0.9B",label:"COVID Low",sub:"2020 · 359 deals",src:"Africa:TBD"},
-          {icon:"hash",val:"6,000+",label:"Total Deals",sub:"2019–2026 verified",src:"Ranes Analytics"},
-          {icon:"star",val:"16+",label:"Unicorns",sub:"2019–2025",src:"Partech / Disrupt Africa"},
-          {icon:"trophy",val:"$5.0B",label:"All-Time Peak",sub:"2022 · 1,034 deals",src:"AVCA"},
-        ].map((k,idx)=>(
-          <div key={k.label} className="card" style={{padding:"15px",gridColumn:k.hero&&!isMobile?"span 2":undefined,background:k.hero?M_BG:undefined,borderColor:k.hero?`${M}33`:undefined}}>
-            <div style={{marginBottom:6}}><KPIIcon id={k.icon}/></div>
-            <div style={{fontFamily:AN,fontSize:k.hero?28:22,fontWeight:700,color:M,lineHeight:1}}>{k.val}</div>
-            <div style={{fontSize:11,fontWeight:700,color:TX,margin:"4px 0 2px",fontFamily:AN,textTransform:"uppercase",letterSpacing:0.4}}>{k.label}</div>
-            <div style={{fontSize:11,color:TX2,fontFamily:AN}}>{k.sub}</div>
-            <span className="src" style={{marginTop:4,display:"inline-block"}}>{k.src}</span>
-          </div>
+
+      {/* Dashboard Tabs */}
+      <div style={{display:"flex",gap:0,borderBottom:`2px solid ${BRD}`,overflowX:"auto",WebkitOverflowScrolling:"touch"}}>
+        {DASH_TABS.map(t=>(
+          <button key={t.id} onClick={()=>setDashTab(t.id)} style={{padding:isMobile?"8px 12px":"10px 22px",border:"none",background:"transparent",cursor:"pointer",fontFamily:AN,fontSize:isMobile?11:13,fontWeight:700,letterSpacing:0.5,textTransform:"uppercase",color:dashTab===t.id?M:TX2,borderBottom:`3px solid ${dashTab===t.id?M:"transparent"}`,marginBottom:-2,transition:"all 0.18s",whiteSpace:"nowrap"}}>{t.label}</button>
         ))}
       </div>
-      <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1.4fr 1fr",gap:16}}>
-        <div className="card" style={{padding:"20px"}}>
-          <div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:4}}>{period==="annual"?"Annual Funding: Equity vs Debt":period==="quarterly"?"Quarterly Funding Trend":"Monthly Funding (Last 18 months)"}</div>
-          <div style={{fontSize:11,color:TX2,marginBottom:14,fontFamily:AN}}><span className="src">Africa: The Big Deal / TechCabal Insights</span></div>
-          <ResponsiveContainer width="100%" height={185}>
-            {period==="annual"?(
-              <ComposedChart data={annualFiltered}><CartesianGrid stroke={BRD} strokeDasharray="3 3"/><XAxis dataKey="year" tick={{fill:TX2,fontSize:10,fontFamily:"Arial Narrow,Arial"}} axisLine={false} tickLine={false}/><YAxis yAxisId="l" tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false} tickFormatter={(v:number)=>`$${v}M`}/><YAxis yAxisId="r" orientation="right" tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false}/><Tooltip content={<CT/>}/><Bar yAxisId="l" dataKey="debt" fill={N4} radius={[3,3,0,0]} stackId="s" name="Debt"/><Bar yAxisId="l" dataKey="equity" fill={M} radius={[3,3,0,0]} stackId="s" name="Equity"/><Line yAxisId="r" type="monotone" dataKey="deals" stroke={GD} strokeWidth={2} dot={{fill:GD,r:3}} name="Deals"/></ComposedChart>
-            ):period==="quarterly"?(
-              <ComposedChart data={quarterlyFiltered}><CartesianGrid stroke={BRD} strokeDasharray="3 3"/><XAxis dataKey="q" tick={{fill:TX2,fontSize:9}} axisLine={false} tickLine={false}/><YAxis tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false} tickFormatter={(v:number)=>`$${v}M`}/><Tooltip/><Bar dataKey="debt" fill={N4} radius={[3,3,0,0]} stackId="s" name="Debt"/><Bar dataKey="equity" fill={M} radius={[3,3,0,0]} stackId="s" name="Equity"/></ComposedChart>
-            ):(
-              <AreaChart data={MONTHLY}><defs><linearGradient id="ge2" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={M} stopOpacity={0.3}/><stop offset="95%" stopColor={M} stopOpacity={0}/></linearGradient><linearGradient id="gd2" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={N4} stopOpacity={0.3}/><stop offset="95%" stopColor={N4} stopOpacity={0}/></linearGradient></defs><CartesianGrid stroke={BRD} strokeDasharray="3 3"/><XAxis dataKey="m" tick={{fill:TX2,fontSize:9}} axisLine={false} tickLine={false}/><YAxis tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false} tickFormatter={(v:number)=>`$${v}M`}/><Tooltip/><Area type="monotone" dataKey="equity" stroke={M} fill="url(#ge2)" name="Equity"/><Area type="monotone" dataKey="debt" stroke={N4} fill="url(#gd2)" name="Debt"/></AreaChart>
-            )}
-          </ResponsiveContainer>
+
+      {/* Verified data strip */}
+      <div style={{background:"#F0FAF4",border:"1px solid #1A6E3C33",borderRadius:8,padding:"10px 16px",display:"flex",gap:10,alignItems:"center",flexWrap:"wrap"}}>
+        <div style={{width:8,height:8,borderRadius:"50%",background:"#1A6E3C",flexShrink:0}}/>
+        <span style={{fontSize:12,color:TX2,fontFamily:AN}}><strong style={{color:TX}}>Verified Q1 2026 Data</strong> · TechCabal Insights · Condia · LaunchBase Africa · Africa: The Big Deal · Synced Apr 2026</span>
+      </div>
+
+      {/* ════════════ MARKET OVERVIEW TAB ════════════ */}
+      {dashTab==="overview"&&(<>
+        {/* Narrative insight */}
+        <div style={{background:BG2,border:`1px solid ${BRD}`,borderRadius:8,padding:"12px 16px",borderLeft:`4px solid ${M}`}}>
+          <div style={{fontFamily:AN,fontSize:10,fontWeight:700,color:M,letterSpacing:1.5,textTransform:"uppercase",marginBottom:4}}>Market Narrative</div>
+          <p style={{fontFamily:AN,fontSize:13,color:TX,lineHeight:1.7}}>{narrative}</p>
         </div>
-        <div className="card" style={{padding:"20px"}}>
-          <div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:14}}>Top Markets , {yearRange[0]===yearRange[1]?yearRange[0]:`${yearRange[0]}–${yearRange[1]}`}</div>
-          <div style={{display:"flex",flexDirection:"column",gap:10}}>
-            {countryData.map((c,i)=>(<div key={i}><div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}><span style={{fontSize:13,fontWeight:700,fontFamily:AN,display:"flex",alignItems:"center",gap:6}}><FlagBadge code={c.flag} size={18}/>{c.country}</span><span style={{fontFamily:AN,fontSize:14,fontWeight:700,color:M}}>${c.value}M</span></div><div className="progress"><div className="pf" style={{width:`${Math.round((c.value/countryData[0].value)*100)}%`}}/></div></div>))}
+
+        {/* Momentum cards */}
+        <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr 1fr":"repeat(4,1fr)",gap:12}}>
+          <div className="card" style={{padding:"14px",background:M_BG,borderColor:`${M}33`}}>
+            <div style={{fontFamily:AN,fontSize:10,color:TX2,letterSpacing:0.8,textTransform:"uppercase",marginBottom:6}}>Q1 2026 vs Q1 2025</div>
+            <div style={{display:"flex",alignItems:"baseline",gap:8}}><span style={{fontFamily:AN,fontSize:28,fontWeight:700,color:M}}>$711M</span><TrendArrow value={momentum.yoy}/></div>
+            <div style={{fontFamily:AN,fontSize:11,color:TX2,marginTop:4}}>YoY {momentum.yoy>0?"growth":"decline"}</div>
+          </div>
+          <div className="card" style={{padding:"14px",background:N_BG,borderColor:`${N4}33`}}>
+            <div style={{fontFamily:AN,fontSize:10,color:TX2,letterSpacing:0.8,textTransform:"uppercase",marginBottom:6}}>Q1 '26 vs Q4 '25</div>
+            <div style={{display:"flex",alignItems:"baseline",gap:8}}><span style={{fontFamily:AN,fontSize:28,fontWeight:700,color:N4}}>$711M</span><TrendArrow value={momentum.qoq}/></div>
+            <div style={{fontFamily:AN,fontSize:11,color:TX2,marginTop:4}}>QoQ {momentum.qoq>0?"acceleration":"slowdown"}</div>
+          </div>
+          <div className="card" style={{padding:"14px"}}>
+            <div style={{fontFamily:AN,fontSize:10,color:TX2,letterSpacing:0.8,textTransform:"uppercase",marginBottom:6}}>Debt Share Q1</div>
+            <div style={{fontFamily:AN,fontSize:28,fontWeight:700,color:M}}>57%</div>
+            <div style={{fontFamily:AN,fontSize:11,color:"#C0392B",fontWeight:700,marginTop:4}}>Historic first · debt &gt; equity</div>
+          </div>
+          <div className="card" style={{padding:"14px"}}>
+            <div style={{fontFamily:AN,fontSize:10,color:TX2,letterSpacing:0.8,textTransform:"uppercase",marginBottom:6}}>Top Mover</div>
+            <div style={{fontFamily:AN,fontSize:20,fontWeight:700,color:M}}>{momentum.sectorMomentum[0].sector}</div>
+            <TrendArrow value={momentum.sectorMomentum[0].yoy}/>
+            <div style={{fontFamily:AN,fontSize:11,color:TX2,marginTop:4}}>Largest YoY sector growth</div>
           </div>
         </div>
-      </div>
-      <div className="card" style={{padding:"20px"}}>
-        <div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:14}}>Sector Funding , {yearRange[1]===2026?"Q1 2026":yearRange[1]}</div>
-        <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 1fr",gap:14}}>
-          <ResponsiveContainer width="100%" height={195}><BarChart data={sectorData.slice(0,7)} layout="vertical" margin={{left:0,right:28}}><XAxis type="number" tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false} tickFormatter={(v:number)=>`$${v}M`}/><YAxis type="category" dataKey="name" tick={{fill:TX,fontSize:11,fontFamily:"Arial Narrow,Arial"}} axisLine={false} tickLine={false} width={80}/><Tooltip formatter={(v:any)=>[`$${v}M`,"Raised"]}/><Bar dataKey="amount" fill={M} radius={[0,4,4,0]} cursor="pointer" onClick={(d:any)=>setSectorF(d.name==="All"?"All":d.name)}/></BarChart></ResponsiveContainer>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>{sectorData.slice(0,8).map((s,i)=>(<div key={i} className="card-tint" style={{padding:"10px 12px",cursor:"pointer",border:sectorF===s.name?`2px solid ${M}`:`1px solid ${BRD}`,borderRadius:7}} onClick={()=>setSectorF(sectorF===s.name?"All":s.name)}><div style={{fontSize:11,color:TX2,fontFamily:AN,marginBottom:4}}>{s.name}</div><div style={{fontFamily:AN,fontSize:17,fontWeight:700,color:M,lineHeight:1}}>${s.amount}M</div><div style={{fontSize:11,color:N4,fontWeight:700,fontFamily:AN,marginTop:3}}>~{s.irr}% IRR</div></div>))}</div>
+
+        {/* Sector momentum table */}
+        <div className="card" style={{padding:"18px"}}>
+          <div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:14}}>Sector Momentum · 2024→2025 and Q1 2026 Pace</div>
+          <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}><table><thead><tr><th>Sector</th><th>2025 ($M)</th><th>YoY Δ</th><th>Q1 '26 ($M)</th><th>Q1 Pace</th><th>IRR Proxy</th></tr></thead><tbody>
+            {momentum.sectorMomentum.map((s,i)=>(
+              <tr key={i} className="tr-h">
+                <td style={{fontWeight:700}}>{s.sector}</td>
+                <td style={{fontFamily:AN,fontWeight:700,color:M}}>${s.y2025}M</td>
+                <td><TrendArrow value={s.yoy}/></td>
+                <td style={{fontFamily:AN,color:N4}}>${s.q1_26}M</td>
+                <td><TrendArrow value={s.q1pace}/><span style={{fontSize:10,color:TX3,marginLeft:4}}>vs avg</span></td>
+                <td style={{fontFamily:AN,fontWeight:700,color:TX}}>~{s.irr}%</td>
+              </tr>
+            ))}
+          </tbody></table></div>
         </div>
-      </div>
-      {(sectorF!=="All"||countryF!=="All")&&(<div className="card" style={{padding:"20px"}}><div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:12}}>Filtered: {sectorF!=="All"&&<span className="badge b-sector" style={{marginRight:6}}>{sectorF}</span>}{countryF!=="All"&&<span className="badge b-meta">{countryF}</span>}<span style={{fontSize:13,color:TX2,fontWeight:400,marginLeft:10}}>{dealsFiltered.length} deals · ${totalFiltered.toFixed(0)}M</span></div><div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}><table><thead><tr>{["Company","Country","Sector","Year","Amount","Round","Type"].map(h=><th key={h}>{h}</th>)}</tr></thead><tbody>{dealsFiltered.sort((a:any,b:any)=>b.year-a.year||b.amount-a.amount).map((d:any,i:number)=>(<tr key={i} className="tr-h"><td style={{fontWeight:700}}><a href={d.url} target="_blank" rel="noreferrer" className="ext" style={{display:"flex",alignItems:"center",gap:6}}><FlagBadge code={d.flag}/>{d.company}</a></td><td style={{color:TX2}}>{d.country}</td><td><span className="badge b-meta">{d.sector}</span></td><td style={{color:TX2}}>{d.year}</td><td style={{fontFamily:AN,fontSize:14,fontWeight:700,color:M}}>${d.amount}M</td><td><span className="badge b-sector">{d.round}</span></td><td><span className={`badge b-type-${d.type}`}>{d.type}</span></td></tr>))}</tbody></table></div></div>)}
-      {period==="annual"&&(<div className="card" style={{padding:"20px"}}><div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:14}}>Annual Summary {yearRange[0]}–{yearRange[1]}</div><div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}><table><thead><tr>{(isMobile?["Year","Total","Deals"]:["Year","Total","Equity","Debt","Deals","Investors","Unicorns","Top Sector","Context"]).map(h=><th key={h}>{h}</th>)}</tr></thead><tbody>{annualFiltered.map((d,i)=>{const isPeak=d.total===5000;const isLow=d.total===900;return(<tr key={i} className="tr-h" style={{background:isPeak?M_BG:isLow?N_BG:undefined}}>{isMobile?(<><td style={{fontWeight:700,color:isPeak?M:isLow?N4:TX}}>{d.year}</td><td style={{fontFamily:AN,fontWeight:700,color:M}}>${d.total.toLocaleString()}M</td><td style={{color:TX2}}>{d.deals.toLocaleString()}</td></>):(<><td style={{fontWeight:700,fontSize:14,color:isPeak?M:isLow?N4:TX}}>{d.year}{isPeak?" ·PEAK":""}</td><td style={{fontFamily:AN,fontSize:15,fontWeight:700,color:M}}>${d.total.toLocaleString()}M</td><td style={{color:TX2}}>${d.equity.toLocaleString()}M</td><td style={{color:N4}}>${d.debt.toLocaleString()}M</td><td style={{color:TX2}}>{d.deals.toLocaleString()}</td><td style={{color:TX2}}>{d.investors.toLocaleString()}</td><td style={{textAlign:"center"}}>{d.unicorns>0?<span className="badge b-type-equity">{d.unicorns+" new"}</span>:"·"}</td><td><span className="badge b-meta">{d.topSector}</span></td><td style={{color:TX2,fontSize:11,maxWidth:260,lineHeight:1.4}}>{d.note}</td></>)}</tr>);})}</tbody></table></div></div>)}
+
+        {/* Filters + Charts (original dashboard content) */}
+        <div className="card" style={{padding:isMobile?"14px":"18px 20px"}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:14,marginBottom:16}}>
+            <div><div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:3}}>Time Range &amp; Filters</div><p style={{fontSize:12,color:TX2,fontFamily:AN}}>Select any period from 2019 to Q1 2026</p></div>
+            <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>{["annual","quarterly","monthly"].map(p=>(<button key={p} className={`pill ${period===p?"on":""}`} onClick={()=>setPeriod(p)} style={{textTransform:"capitalize"}}>{p}</button>))}</div>
+          </div>
+          {period==="annual"&&(<><div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:8}}><span style={{fontSize:11,color:TX2,fontFamily:AN,marginRight:4,alignSelf:"center"}}>From:</span>{YEARS.slice(0,-1).map(y=>(<button key={y} className={`pill ${yearRange[0]===parseInt(y)?"on":""}`} onClick={()=>setYearRange([parseInt(y),Math.max(parseInt(y),yearRange[1])])}>{y}</button>))}</div><div style={{display:"flex",gap:6,flexWrap:"wrap"}}><span style={{fontSize:11,color:TX2,fontFamily:AN,marginRight:4,alignSelf:"center"}}>To:</span>{YEARS.map(y=>(<button key={y} className={`pill ${yearRange[1]===parseInt(y)?"on":""}`} onClick={()=>setYearRange([Math.min(yearRange[0],parseInt(y)),parseInt(y)])}>{y==="2026"?"2026 (Q1)":y}</button>))}</div></>)}
+          <div style={{display:"flex",gap:12,marginTop:14,flexWrap:"wrap",alignItems:"center"}}>
+            <div><span style={{fontSize:11,color:TX2,fontFamily:AN,marginRight:6}}>Sector:</span><select value={sectorF} onChange={e=>setSectorF(e.target.value)} style={{minWidth:130,padding:"5px 10px",fontSize:12}}>{SECTORS_LIST.map(s=><option key={s}>{s}</option>)}</select></div>
+            <div><span style={{fontSize:11,color:TX2,fontFamily:AN,marginRight:6}}>Country:</span><select value={countryF} onChange={e=>setCountryF(e.target.value)} style={{minWidth:130,padding:"5px 10px",fontSize:12}}>{COUNTRIES_LIST.map(c=><option key={c}>{c}</option>)}</select></div>
+            {(sectorF!=="All"||countryF!=="All")&&(<><button className="btn bo" style={{fontSize:11,padding:"5px 12px"}} onClick={()=>{setSectorF("All");setCountryF("All");}}>Clear filters</button><span className="badge b-type-equity">{dealsFiltered.length} deals · ${totalFiltered.toFixed(0)}M</span></>)}
+          </div>
+          {/* Narrative output for active filters */}
+          {(sectorF!=="All"||countryF!=="All")&&(
+            <div style={{background:BG2,border:`1px solid ${BRD}`,borderRadius:6,padding:"10px 14px",marginTop:12,borderLeft:`3px solid ${M}`}}>
+              <p style={{fontFamily:AN,fontSize:12,color:TX,lineHeight:1.7}}>{narrative}</p>
+            </div>
+          )}
+        </div>
+
+        <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1.4fr 1fr",gap:16}}>
+          <div className="card" style={{padding:"20px"}}>
+            <div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:4}}>{period==="annual"?"Annual Funding: Equity vs Debt":period==="quarterly"?"Quarterly Funding Trend":"Monthly Funding (Last 18 months)"}</div>
+            <div style={{fontSize:11,color:TX2,marginBottom:14,fontFamily:AN}}><span className="src">Africa: The Big Deal / TechCabal Insights</span></div>
+            <ResponsiveContainer width="100%" height={185}>
+              {period==="annual"?(
+                <ComposedChart data={annualFiltered}><CartesianGrid stroke={BRD} strokeDasharray="3 3"/><XAxis dataKey="year" tick={{fill:TX2,fontSize:10,fontFamily:"Arial Narrow,Arial"}} axisLine={false} tickLine={false}/><YAxis yAxisId="l" tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false} tickFormatter={(v:number)=>`$${v}M`}/><YAxis yAxisId="r" orientation="right" tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false}/><Tooltip content={<CT/>}/><Bar yAxisId="l" dataKey="debt" fill={N4} radius={[3,3,0,0]} stackId="s" name="Debt"/><Bar yAxisId="l" dataKey="equity" fill={M} radius={[3,3,0,0]} stackId="s" name="Equity"/><Line yAxisId="r" type="monotone" dataKey="deals" stroke={GD} strokeWidth={2} dot={{fill:GD,r:3}} name="Deals"/></ComposedChart>
+              ):period==="quarterly"?(
+                <ComposedChart data={quarterlyFiltered}><CartesianGrid stroke={BRD} strokeDasharray="3 3"/><XAxis dataKey="q" tick={{fill:TX2,fontSize:9}} axisLine={false} tickLine={false}/><YAxis tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false} tickFormatter={(v:number)=>`$${v}M`}/><Tooltip/><Bar dataKey="debt" fill={N4} radius={[3,3,0,0]} stackId="s" name="Debt"/><Bar dataKey="equity" fill={M} radius={[3,3,0,0]} stackId="s" name="Equity"/></ComposedChart>
+              ):(
+                <AreaChart data={MONTHLY}><defs><linearGradient id="ge2" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={M} stopOpacity={0.3}/><stop offset="95%" stopColor={M} stopOpacity={0}/></linearGradient><linearGradient id="gd2" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={N4} stopOpacity={0.3}/><stop offset="95%" stopColor={N4} stopOpacity={0}/></linearGradient></defs><CartesianGrid stroke={BRD} strokeDasharray="3 3"/><XAxis dataKey="m" tick={{fill:TX2,fontSize:9}} axisLine={false} tickLine={false}/><YAxis tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false} tickFormatter={(v:number)=>`$${v}M`}/><Tooltip/><Area type="monotone" dataKey="equity" stroke={M} fill="url(#ge2)" name="Equity"/><Area type="monotone" dataKey="debt" stroke={N4} fill="url(#gd2)" name="Debt"/></AreaChart>
+              )}
+            </ResponsiveContainer>
+          </div>
+          <div className="card" style={{padding:"20px"}}>
+            <div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:14}}>Top Markets · {yearRange[0]===yearRange[1]?yearRange[0]:`${yearRange[0]}–${yearRange[1]}`}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+              {countryData.map((c,i)=>(<div key={i}><div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}><span style={{fontSize:13,fontWeight:700,fontFamily:AN,display:"flex",alignItems:"center",gap:6}}><FlagBadge code={c.flag} size={18}/>{c.country}</span><span style={{fontFamily:AN,fontSize:14,fontWeight:700,color:M}}>${c.value}M</span></div><div className="progress"><div className="pf" style={{width:`${Math.round((c.value/countryData[0].value)*100)}%`}}/></div></div>))}
+            </div>
+          </div>
+        </div>
+
+        <div className="card" style={{padding:"20px"}}>
+          <div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:14}}>Sector Funding · {yearRange[1]===2026?"Q1 2026":yearRange[1]}</div>
+          <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 1fr",gap:14}}>
+            <ResponsiveContainer width="100%" height={195}><BarChart data={sectorData.slice(0,7)} layout="vertical" margin={{left:0,right:28}}><XAxis type="number" tick={{fill:TX2,fontSize:10}} axisLine={false} tickLine={false} tickFormatter={(v:number)=>`$${v}M`}/><YAxis type="category" dataKey="name" tick={{fill:TX,fontSize:11,fontFamily:"Arial Narrow,Arial"}} axisLine={false} tickLine={false} width={80}/><Tooltip formatter={(v:any)=>[`$${v}M`,"Raised"]}/><Bar dataKey="amount" fill={M} radius={[0,4,4,0]} cursor="pointer" onClick={(d:any)=>setSectorF(d.name==="All"?"All":d.name)}/></BarChart></ResponsiveContainer>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>{sectorData.slice(0,8).map((s,i)=>(<div key={i} className="card-tint" style={{padding:"10px 12px",cursor:"pointer",border:sectorF===s.name?`2px solid ${M}`:`1px solid ${BRD}`,borderRadius:7}} onClick={()=>setSectorF(sectorF===s.name?"All":s.name)}><div style={{fontSize:11,color:TX2,fontFamily:AN,marginBottom:4}}>{s.name}</div><div style={{fontFamily:AN,fontSize:17,fontWeight:700,color:M,lineHeight:1}}>${s.amount}M</div><div style={{fontSize:11,color:N4,fontWeight:700,fontFamily:AN,marginTop:3}}>~{s.irr}% IRR</div></div>))}</div>
+          </div>
+        </div>
+
+        {period==="annual"&&(<div className="card" style={{padding:"20px"}}><div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX,marginBottom:14}}>Annual Summary {yearRange[0]}–{yearRange[1]}</div><div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}><table><thead><tr>{(isMobile?["Year","Total","Deals"]:["Year","Total","Equity","Debt","Deals","Investors","Unicorns","Top Sector","Context"]).map(h=><th key={h}>{h}</th>)}</tr></thead><tbody>{annualFiltered.map((d,i)=>{const isPeak=d.total===5000;const isLow=d.total===900;return(<tr key={i} className="tr-h" style={{background:isPeak?M_BG:isLow?N_BG:undefined}}>{isMobile?(<><td style={{fontWeight:700,color:isPeak?M:isLow?N4:TX}}>{d.year}</td><td style={{fontFamily:AN,fontWeight:700,color:M}}>${d.total.toLocaleString()}M</td><td style={{color:TX2}}>{d.deals.toLocaleString()}</td></>):(<><td style={{fontWeight:700,fontSize:14,color:isPeak?M:isLow?N4:TX}}>{d.year}{isPeak?" ·PEAK":""}</td><td style={{fontFamily:AN,fontSize:15,fontWeight:700,color:M}}>${d.total.toLocaleString()}M</td><td style={{color:TX2}}>${d.equity.toLocaleString()}M</td><td style={{color:N4}}>${d.debt.toLocaleString()}M</td><td style={{color:TX2}}>{d.deals.toLocaleString()}</td><td style={{color:TX2}}>{d.investors.toLocaleString()}</td><td style={{textAlign:"center"}}>{d.unicorns>0?<span className="badge b-type-equity">{d.unicorns+" new"}</span>:"·"}</td><td><span className="badge b-meta">{d.topSector}</span></td><td style={{color:TX2,fontSize:11,maxWidth:260,lineHeight:1.4}}>{d.note}</td></>)}</tr>);})}</tbody></table></div></div>)}
+      </>)}
+
+      {/* ════════════ INVESTOR INTELLIGENCE TAB ════════════ */}
+      {dashTab==="investor"&&(<>
+        {/* Stage Mix */}
+        <div className="card" style={{padding:"20px"}}>
+          <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Stage Mix &amp; Round Size Bands</div>
+          <p style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:16}}>How the market distributes across stages. Calibrate entry points and expected cheque sizes.</p>
+          <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)",gap:12}}>
+            {STAGE_MIX.map((s,i)=>(
+              <div key={i} className="card-tint" style={{padding:"14px",borderLeft:`4px solid ${s.color}`}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6}}>
+                  <div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX}}>{s.stage}</div>
+                  <div style={{fontFamily:AN,fontSize:20,fontWeight:700,color:s.color}}>{s.pct}%</div>
+                </div>
+                <div style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:4}}>Cheque: <strong style={{color:TX}}>{s.cheque}</strong></div>
+                <div style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:4}}>Dilution: <strong style={{color:TX}}>{s.dilution}</strong></div>
+                <div style={{display:"flex",gap:8,marginTop:8}}>
+                  <span style={{fontFamily:AN,fontSize:11,color:TX3}}>2024: {s.deals2024}</span>
+                  <span style={{fontFamily:AN,fontSize:11,color:TX3}}>2025: {s.deals2025}</span>
+                  <TrendArrow value={Math.round(((s.deals2025-s.deals2024)/s.deals2024)*100)}/>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Investor Activity Rankings */}
+        <div className="card" style={{padding:"20px"}}>
+          <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Most Active Investors · Q1 2026</div>
+          <p style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:16}}>Ranked by deal count. Use to identify co-investors or fundraise targets.</p>
+          <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}><table><thead><tr><th>#</th><th>Investor</th><th>Q1 Deals</th><th>Type</th><th>Sectors</th><th>Geographies</th><th>Trend</th></tr></thead><tbody>
+            {INVESTOR_RANKINGS.map((inv,i)=>(
+              <tr key={i} className="tr-h">
+                <td style={{fontWeight:700,color:TX3}}>{i+1}</td>
+                <td style={{fontWeight:700,color:TX}}>{inv.name}</td>
+                <td style={{fontFamily:AN,fontWeight:700,color:inv.deals_q1>0?M:TX3,fontSize:16}}>{inv.deals_q1||"–"}</td>
+                <td><span className="badge b-meta">{inv.type}</span></td>
+                <td style={{fontSize:11,color:TX2}}>{inv.sectors.join(", ")}</td>
+                <td style={{fontSize:11,color:TX2}}>{inv.geos.join(", ")}</td>
+                <td><TrendArrow value={inv.trend==="up"?15:inv.trend==="down"?-20:0} suffix=""/></td>
+              </tr>
+            ))}
+          </tbody></table></div>
+          <div style={{marginTop:12}}>
+            <button className="btn bp" style={{fontSize:11,padding:"6px 14px",display:"flex",alignItems:"center",gap:6}}
+              onClick={()=>exportToCSV(INVESTOR_RANKINGS.map(inv=>({Investor:inv.name,Q1_Deals:inv.deals_q1,Type:inv.type,Sectors:inv.sectors.join("; "),Geographies:inv.geos.join("; "),Trend:inv.trend})),"ranes-investor-rankings-q1-2026.csv")}>
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1v7M2 8l4 3 4-3" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>Export Rankings
+            </button>
+          </div>
+        </div>
+
+        {/* Market Concentration */}
+        <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr",gap:14}}>
+          <div className="card" style={{padding:"16px",background:M_BG,borderColor:`${M}33`}}>
+            <div style={{fontFamily:AN,fontSize:10,fontWeight:700,color:M,letterSpacing:1.5,textTransform:"uppercase",marginBottom:8}}>Sector Concentration</div>
+            <div style={{fontFamily:AN,fontSize:28,fontWeight:700,color:M}}>{concentration.top3pct}%</div>
+            <div style={{fontFamily:AN,fontSize:12,color:TX2,marginTop:4}}>of Q1 capital in top 3 sectors</div>
+            <div style={{fontFamily:AN,fontSize:11,color:TX3,marginTop:6}}>{concentration.top3sectors.join(" · ")}</div>
+          </div>
+          <div className="card" style={{padding:"16px",background:N_BG,borderColor:`${N4}33`}}>
+            <div style={{fontFamily:AN,fontSize:10,fontWeight:700,color:N4,letterSpacing:1.5,textTransform:"uppercase",marginBottom:8}}>Country Concentration</div>
+            <div style={{fontFamily:AN,fontSize:28,fontWeight:700,color:N4}}>{concentration.top3Cpct}%</div>
+            <div style={{fontFamily:AN,fontSize:12,color:TX2,marginTop:4}}>of Q1 capital in top 3 countries</div>
+            <div style={{fontFamily:AN,fontSize:11,color:TX3,marginTop:6}}>{concentration.top3countries.join(" · ")}</div>
+          </div>
+          <div className="card" style={{padding:"16px"}}>
+            <div style={{fontFamily:AN,fontSize:10,fontWeight:700,color:GD,letterSpacing:1.5,textTransform:"uppercase",marginBottom:8}}>Deal Concentration</div>
+            <div style={{fontFamily:AN,fontSize:28,fontWeight:700,color:GD}}>{concentration.top3dpct}%</div>
+            <div style={{fontFamily:AN,fontSize:12,color:TX2,marginTop:4}}>of Q1 capital in top 3 deals</div>
+          </div>
+        </div>
+
+        {/* Risk & Return Matrix */}
+        <div className="card" style={{padding:"20px"}}>
+          <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Risk &amp; Return by Sector</div>
+          <p style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:16}}>Proxy risk levels, IRR benchmarks, and capital intensity. Use for portfolio construction and allocation decisions.</p>
+          <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}><table><thead><tr><th>Sector</th><th>IRR Proxy</th><th>Risk</th><th>Capital</th><th>Regulatory</th><th>Scale Speed</th><th>Notes</th></tr></thead><tbody>
+            {RISK_RETURN.map((r,i)=>(
+              <tr key={i} className="tr-h">
+                <td style={{fontWeight:700}}>{r.sector}</td>
+                <td style={{fontFamily:AN,fontWeight:700,color:M}}>~{r.irr}%</td>
+                <td><span className="badge" style={{background:r.risk==="Very High"?"#C0392B22":r.risk==="High"?"#E5B94A22":"#1A6E3C22",color:r.risk==="Very High"?"#C0392B":r.risk==="High"?GD:"#1A6E3C",border:`1px solid ${r.risk==="Very High"?"#C0392B":r.risk==="High"?GD:"#1A6E3C"}33`}}>{r.risk}</span></td>
+                <td style={{fontSize:12,color:TX2}}>{r.capital}</td>
+                <td style={{fontSize:12,color:TX2}}>{r.regulatory}</td>
+                <td style={{fontSize:12,color:TX2}}>{r.scale}</td>
+                <td style={{fontSize:11,color:TX3,maxWidth:200}}>{r.notes}</td>
+              </tr>
+            ))}
+          </tbody></table></div>
+        </div>
+      </>)}
+
+      {/* ════════════ FOUNDER TOOLS TAB ════════════ */}
+      {dashTab==="founder"&&(<>
+        {/* Founder Readiness Score */}
+        <div className="card" style={{padding:"22px"}}>
+          <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Fundraise Readiness Score</div>
+          <p style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:18}}>Compare your profile against what the market is currently funding. This is directional guidance, not a guarantee.</p>
+          <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 1fr",gap:20}}>
+            <div>
+              <div style={{display:"flex",gap:12,flexWrap:"wrap",marginBottom:16}}>
+                <div><div style={{fontFamily:AN,fontSize:10,color:TX2,letterSpacing:1,textTransform:"uppercase",marginBottom:4}}>Your Sector</div><select value={frSector} onChange={e=>setFrSector(e.target.value)} style={{minWidth:140}}>{["Fintech","Logistics","Energy","Agritech","Healthtech","E-Commerce","B2B SaaS","E-Mobility","Defence"].map(s=><option key={s}>{s}</option>)}</select></div>
+                <div><div style={{fontFamily:AN,fontSize:10,color:TX2,letterSpacing:1,textTransform:"uppercase",marginBottom:4}}>Stage</div><select value={frStage} onChange={e=>setFrStage(e.target.value)} style={{minWidth:120}}>{STAGE_MIX.map(s=><option key={s.stage}>{s.stage}</option>)}</select></div>
+                <div><div style={{fontFamily:AN,fontSize:10,color:TX2,letterSpacing:1,textTransform:"uppercase",marginBottom:4}}>Geography</div><select value={frGeo} onChange={e=>setFrGeo(e.target.value)} style={{minWidth:120}}>{["Kenya","Nigeria","Egypt","South Africa","Morocco","Ghana","Senegal","Tanzania","Rwanda","Other"].map(g=><option key={g}>{g}</option>)}</select></div>
+              </div>
+              <div style={{background:BG2,border:`1px solid ${BRD}`,borderRadius:8,padding:"16px",borderLeft:`4px solid ${readiness.color}`}}>
+                <div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:readiness.color,marginBottom:6}}>{readiness.label} — {readiness.score}/100</div>
+                <p style={{fontFamily:AN,fontSize:13,color:TX,lineHeight:1.7}}>{readiness.advice}</p>
+              </div>
+            </div>
+            <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+              <CircularGauge score={readiness.score} label={readiness.label} color={readiness.color} size={isMobile?130:160}/>
+            </div>
+          </div>
+        </div>
+
+        {/* Comparable Deals */}
+        <div className="card" style={{padding:"20px"}}>
+          <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Comparable Deals · {frSector}</div>
+          <p style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:16}}>What similar companies actually raised, and on what terms.</p>
+          {(()=>{
+            const comps=ALL_DEALS.filter((d:any)=>d.sector===frSector||(frSector==="E-Mobility"&&d.sector==="Mobility")).sort((a:any,b:any)=>b.year-a.year||b.amount-a.amount).slice(0,5);
+            const stageInfo=STAGE_MIX.find(s=>s.stage===frStage);
+            return comps.length>0?(
+              <div>
+                <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}><table><thead><tr><th>Company</th><th>Country</th><th>Year</th><th>Amount</th><th>Round</th><th>Type</th><th>Investors</th></tr></thead><tbody>
+                  {comps.map((d:any,i:number)=>(
+                    <tr key={i} className="tr-h">
+                      <td style={{fontWeight:700}}><a href={d.url} target="_blank" rel="noreferrer" className="ext">{d.company}</a></td>
+                      <td style={{color:TX2}}>{d.country}</td>
+                      <td style={{color:N4,fontWeight:700}}>{d.year}</td>
+                      <td style={{fontFamily:AN,fontWeight:700,color:M}}>${d.amount}M</td>
+                      <td><span className="badge b-sector">{d.round}</span></td>
+                      <td><span className={`badge b-type-${d.type}`}>{d.type}</span></td>
+                      <td style={{fontSize:11,color:TX2,maxWidth:160}}>{d.investors}</td>
+                    </tr>
+                  ))}
+                </tbody></table></div>
+                {stageInfo&&(
+                  <div style={{marginTop:14,background:BG2,border:`1px solid ${BRD}`,borderRadius:6,padding:"12px 14px"}}>
+                    <div style={{fontFamily:AN,fontSize:10,fontWeight:700,color:M,letterSpacing:1,textTransform:"uppercase",marginBottom:4}}>Stage Benchmark: {frStage}</div>
+                    <div style={{fontFamily:AN,fontSize:12,color:TX2,lineHeight:1.7}}>Typical cheque: <strong style={{color:TX}}>{stageInfo.cheque}</strong> · Expected dilution: <strong style={{color:TX}}>{stageInfo.dilution}</strong> · Market share of deals: <strong style={{color:TX}}>{stageInfo.pct}%</strong></div>
+                  </div>
+                )}
+              </div>
+            ):(<p style={{fontFamily:AN,fontSize:13,color:TX3}}>No comparable deals found for {frSector}. Try broadening your sector.</p>);
+          })()}
+        </div>
+
+        {/* Sector-Specific Expectations */}
+        <div className="card" style={{padding:"20px"}}>
+          <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>What Investors Expect · {frSector}</div>
+          <p style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:16}}>Common questions, KPI benchmarks, and diligence concerns for your sector.</p>
+          {(()=>{
+            const exp=SECTOR_EXPECTATIONS[frSector];
+            if(!exp) return <p style={{fontFamily:AN,fontSize:13,color:TX3}}>Detailed expectations not yet available for {frSector}. Contact us for sector-specific guidance.</p>;
+            return(
+              <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 1fr",gap:16}}>
+                <div>
+                  <div style={{fontFamily:AN,fontSize:11,fontWeight:700,color:M,letterSpacing:1,textTransform:"uppercase",marginBottom:8}}>Questions Investors Will Ask</div>
+                  {exp.questions.map((q:string,i:number)=>(<div key={i} style={{display:"flex",gap:8,marginBottom:8}}><span style={{color:M,fontWeight:700,flexShrink:0}}>•</span><span style={{fontFamily:AN,fontSize:12,color:TX,lineHeight:1.6}}>{q}</span></div>))}
+                </div>
+                <div>
+                  <div style={{fontFamily:AN,fontSize:11,fontWeight:700,color:"#1A6E3C",letterSpacing:1,textTransform:"uppercase",marginBottom:8}}>Acceptable KPI Ranges</div>
+                  {exp.kpis.map((k:string,i:number)=>(<div key={i} style={{display:"flex",gap:8,marginBottom:8}}><span style={{color:"#1A6E3C",fontWeight:700,flexShrink:0}}>✓</span><span style={{fontFamily:AN,fontSize:12,color:TX,lineHeight:1.6}}>{k}</span></div>))}
+                  <div style={{fontFamily:AN,fontSize:11,fontWeight:700,color:"#C0392B",letterSpacing:1,textTransform:"uppercase",marginBottom:8,marginTop:14}}>Common Diligence Concerns</div>
+                  {exp.concerns.map((c:string,i:number)=>(<div key={i} style={{display:"flex",gap:8,marginBottom:8}}><span style={{color:"#C0392B",fontWeight:700,flexShrink:0}}>!</span><span style={{fontFamily:AN,fontSize:12,color:TX2,lineHeight:1.6}}>{c}</span></div>))}
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+
+        {/* Raise Strategy Timing */}
+        <div className="card" style={{padding:"20px"}}>
+          <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Fundraise Timing · Seasonal Windows</div>
+          <p style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:16}}>When to go out matters. These windows are based on historical investor activity patterns.</p>
+          <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr 1fr":"repeat(4,1fr)",gap:12}}>
+            {RAISE_TIMING.map((rt,i)=>(
+              <div key={i} className="card-tint" style={{padding:"14px",borderTop:`4px solid ${rt.color}`,textAlign:"center"}}>
+                <div style={{fontFamily:AN,fontSize:18,fontWeight:700,color:TX,marginBottom:4}}>{rt.quarter}</div>
+                <div style={{fontFamily:AN,fontSize:28,fontWeight:700,color:rt.color}}>{rt.score}</div>
+                <div style={{fontFamily:AN,fontSize:10,color:TX2,letterSpacing:0.5,textTransform:"uppercase",marginBottom:6}}>Receptivity Score</div>
+                <p style={{fontFamily:AN,fontSize:11,color:TX2,lineHeight:1.6}}>{rt.note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </>)}
+
+      {/* ════════════ COUNTRY COMPARE TAB ════════════ */}
+      {dashTab==="compare"&&(<>
+        <div className="card" style={{padding:"20px"}}>
+          <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Country Comparison · Side by Side</div>
+          <p style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:16}}>Compare markets across deal value, average round size, sector mix, and trajectory.</p>
+          <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}><table><thead><tr><th>Country</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>Q1 '26</th><th>2024→2025</th><th>Avg Round '25</th></tr></thead><tbody>
+            {COUNTRY_HIST.map((c,i)=>{
+              const chg=c.y2024>0?Math.round(((c.y2025-c.y2024)/c.y2024)*100):0;
+              const avgRound=c.y2025>0?`$${(c.y2025/Math.max(1,Math.round(c.y2025/8))).toFixed(0)}M`:"–";
+              return(
+                <tr key={i} className="tr-h">
+                  <td style={{fontWeight:700,display:"flex",alignItems:"center",gap:6}}><FlagBadge code={c.flag}/>{c.country}</td>
+                  <td style={{color:TX2}}>${c.y2022}M</td>
+                  <td style={{color:TX2}}>${c.y2023}M</td>
+                  <td style={{color:TX2}}>${c.y2024}M</td>
+                  <td style={{fontFamily:AN,fontWeight:700,color:M}}>${c.y2025}M</td>
+                  <td style={{fontFamily:AN,fontWeight:700,color:N4}}>${c.q1_26}M</td>
+                  <td><TrendArrow value={chg}/></td>
+                  <td style={{color:TX2}}>{avgRound}</td>
+                </tr>
+              );
+            })}
+          </tbody></table></div>
+        </div>
+
+        {/* Country heatmap cards */}
+        <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr",gap:14}}>
+          {COUNTRY_HIST.map((c,i)=>{
+            const chg=c.y2024>0?Math.round(((c.y2025-c.y2024)/c.y2024)*100):0;
+            const q1share=Math.round((c.q1_26/711)*100);
+            const heat=q1share>=20?"#1A6E3C":q1share>=10?GD:"#C0392B";
+            return(
+              <div key={i} className="card" style={{padding:"16px",borderLeft:`4px solid ${heat}`}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
+                  <span style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,display:"flex",alignItems:"center",gap:8}}><FlagBadge code={c.flag}/>{c.country}</span>
+                  <TrendArrow value={chg}/>
+                </div>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                  <div><div style={{fontFamily:AN,fontSize:10,color:TX3,textTransform:"uppercase"}}>2025 Total</div><div style={{fontFamily:AN,fontSize:18,fontWeight:700,color:M}}>${c.y2025}M</div></div>
+                  <div><div style={{fontFamily:AN,fontSize:10,color:TX3,textTransform:"uppercase"}}>Q1 '26</div><div style={{fontFamily:AN,fontSize:18,fontWeight:700,color:N4}}>${c.q1_26}M</div></div>
+                  <div><div style={{fontFamily:AN,fontSize:10,color:TX3,textTransform:"uppercase"}}>Q1 Share</div><div style={{fontFamily:AN,fontSize:14,fontWeight:700,color:heat}}>{q1share}%</div></div>
+                  <div><div style={{fontFamily:AN,fontSize:10,color:TX3,textTransform:"uppercase"}}>YoY Change</div><div><TrendArrow value={chg}/></div></div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Signal trail for active deals */}
+        <div className="card" style={{padding:"20px"}}>
+          <div style={{fontFamily:AN,fontSize:16,fontWeight:700,color:TX,marginBottom:4}}>Signal Confidence Trail · Active Deals</div>
+          <p style={{fontFamily:AN,fontSize:12,color:TX2,marginBottom:16}}>Why each deal is classified and how strong the signal is.</p>
+          {ACTIVE_DEALS.map((d,i)=>{
+            const cl=confidenceLabel(d.confidence);
+            return(
+              <div key={i} style={{borderTop:i>0?`1px solid ${BRD}`:undefined,padding:"14px 0"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8,marginBottom:6}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <FlagBadge code={d.flag}/>
+                    <span style={{fontFamily:AN,fontSize:14,fontWeight:700,color:TX}}>{d.company}</span>
+                    <span className="badge b-sector">{d.sector}</span>
+                    <span className={`badge b-status-${d.status.toLowerCase().replace("-","")}`}>{d.status}</span>
+                  </div>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <div style={{width:60,height:6,background:BRD,borderRadius:3,overflow:"hidden"}}><div style={{height:"100%",width:`${d.confidence}%`,background:cl.color,borderRadius:3}}/></div>
+                    <span style={{fontFamily:AN,fontSize:11,fontWeight:700,color:cl.color}}>{d.confidence}% · {cl.label}</span>
+                  </div>
+                </div>
+                <p style={{fontFamily:AN,fontSize:12,color:TX2,lineHeight:1.6,marginBottom:4}}>{d.desc}</p>
+                <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                  <span style={{fontFamily:AN,fontSize:11,color:TX3}}>Range: {d.range}</span>
+                  <span style={{fontFamily:AN,fontSize:11,color:TX3}}>Stage: {d.stage}</span>
+                  <span className="src">{d.source}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </>)}
     </div>
   );
 }
