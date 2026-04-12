@@ -274,6 +274,146 @@ const LEGAL:Record<string,any>={
 const SECTORS_LIST=["All","Fintech","Energy","Logistics","E-Mobility","Agritech","Healthtech","E-Commerce","B2B SaaS","Mobility","Proptech","Defence","Telecom"];
 const COUNTRIES_LIST=["All","Nigeria","Kenya","Egypt","South Africa","Ghana","Morocco","Senegal","Cote d'Ivoire","Tanzania","Pan-African"];
 const TYPES_LIST=["All","equity","debt","hybrid"];
+/* ─── STAGE MIX & BENCHMARKS ───────────────────────────── */
+const STAGE_MIX=[
+  {stage:"Pre-seed",pct:18,cheque:"$200K–$1M",dilution:"10–20%",deals2025:126,deals2024:98,trend:"up",color:M3},
+  {stage:"Seed",pct:32,cheque:"$500K–$3M",dilution:"15–25%",deals2025:224,deals2024:157,trend:"up",color:M},
+  {stage:"Series A",pct:22,cheque:"$3M–$15M",dilution:"20–30%",deals2025:154,deals2024:113,trend:"flat",color:N4},
+  {stage:"Series B",pct:15,cheque:"$10M–$40M",dilution:"15–25%",deals2025:105,deals2024:78,trend:"up",color:N5},
+  {stage:"Growth/C+",pct:8,cheque:"$40M–$200M",dilution:"10–20%",deals2025:56,deals2024:29,trend:"up",color:GD},
+  {stage:"Debt/Project",pct:5,cheque:"$5M–$100M",dilution:"0%",deals2025:35,deals2024:15,trend:"up",color:M4},
+];
+
+const INVESTOR_RANKINGS=[
+  {name:"IFC",deals_q1:4,sectors:["Energy","Agritech","Fintech"],geos:["Pan-African"],type:"DFI",trend:"stable"},
+  {name:"Novastar Ventures",deals_q1:3,sectors:["E-Mobility","Agritech"],geos:["East Africa"],type:"VC",trend:"up"},
+  {name:"Azur Innovation Fund",deals_q1:3,sectors:["BaaS","E-Mobility"],geos:["North/West Africa"],type:"VC",trend:"up"},
+  {name:"Mirova",deals_q1:2,sectors:["Energy","E-Mobility"],geos:["Pan-African"],type:"Impact",trend:"stable"},
+  {name:"Partech Africa",deals_q1:2,sectors:["Fintech","B2B SaaS"],geos:["West Africa"],type:"VC",trend:"down"},
+  {name:"TLcom Capital",deals_q1:2,sectors:["B2B E-Commerce","Logistics"],geos:["Nigeria","Kenya"],type:"VC",trend:"stable"},
+  {name:"BII (CDC)",deals_q1:2,sectors:["Energy","E-Mobility"],geos:["Pan-African"],type:"DFI",trend:"stable"},
+  {name:"SoftBank Vision Fund",deals_q1:0,sectors:["Fintech"],geos:["Nigeria"],type:"VC",trend:"down"},
+  {name:"Tiger Global",deals_q1:0,sectors:["Logistics","Fintech"],geos:["Pan-African"],type:"VC",trend:"down"},
+  {name:"Sequoia Heritage",deals_q1:0,sectors:["Fintech"],geos:["West Africa"],type:"VC",trend:"down"},
+];
+
+const SECTOR_EXPECTATIONS:Record<string,{questions:string[];kpis:string[];concerns:string[];window:string}> = {
+  Fintech:{questions:["What is your monthly transaction volume?","What is your net revenue retention?","How are you handling regulatory licensing?","What is customer acquisition cost vs LTV?"],kpis:["MRR >$50K for Series A","NRR >110%","CAC payback <12 months","Default rate <3%"],concerns:["Regulatory licensing timelines","FX risk on cross-border flows","Competition from banks and telcos","KYC/AML compliance cost"],window:"Q2–Q3 strongest; avoid December"},
+  Logistics:{questions:["What is your delivery unit economics?","How do you handle last-mile in peri-urban areas?","What is fleet utilisation rate?","How asset-heavy is your model?"],kpis:["Gross margin >25%","Delivery cost declining QoQ","Fleet utilisation >70%","Revenue per trip growing"],concerns:["Infrastructure and road quality","Fuel/energy cost volatility","Driver/rider retention","Regulatory fragmentation across borders"],window:"Q1–Q2 strongest; logistics peaks in Q4"},
+  Energy:{questions:["What is your project pipeline value?","How do you structure offtake agreements?","What is your blended cost of capital?","What is your connection/installation rate?"],kpis:["Project IRR >12%","Customer default <5%","Connection growth >20% QoQ","Revenue per connection stable"],concerns:["Regulatory approvals and tariff changes","Currency risk on USD-denominated debt","Hardware supply chain reliability","Collection rates in rural areas"],window:"Year-round; DFIs most active Q1–Q2"},
+  Agritech:{questions:["What is your farmer retention rate?","How do you manage weather/climate risk?","What is your take rate on transactions?","How vertically integrated are you?"],kpis:["Farmer retention >60%","GMV growing >30% YoY","Take rate >3%","Unit economics positive at field level"],concerns:["Weather and climate unpredictability","Smallholder creditworthiness","Cold chain infrastructure gaps","Seasonality of revenue"],window:"Post-harvest Q1–Q2; avoid planting season pitch"},
+  Healthtech:{questions:["What is your patient acquisition cost?","How do you integrate with public health systems?","What is your regulatory pathway?","Revenue per user trend?"],kpis:["MAU >10K for Series A","Revenue per user growing","Regulatory approvals in hand","Retention >40% at 6 months"],concerns:["Regulatory approval timelines","Integration with existing health infrastructure","Data privacy and health data regulations","Willingness to pay in low-income segments"],window:"Q1–Q3; global health funding cycles align Q2"},
+  "E-Commerce":{questions:["What is your repeat purchase rate?","What is AOV trend?","How do you manage returns?","What is your inventory model?"],kpis:["Repeat rate >30%","AOV growing or stable","Return rate <10%","Contribution margin positive"],concerns:["Logistics cost as % of AOV","Payment collection rates","Competition from informal retail","Working capital intensity"],window:"Q3–Q4 pre-holiday; avoid Q1 cash crunch"},
+  "B2B SaaS":{questions:["What is your ARR and growth rate?","Net revenue retention?","What is your sales cycle length?","How sticky is your product?"],kpis:["ARR >$500K for Series A","NRR >110%","Gross margin >70%","Logo churn <5% annually"],concerns:["Long enterprise sales cycles in Africa","USD pricing vs local currency revenue","Small addressable market perception","Talent retention and cost"],window:"Q1–Q2 budget cycle; enterprise buyers plan in Q4"},
+};
+
+const RAISE_TIMING=[
+  {quarter:"Q1",score:72,note:"Moderate. DFIs active but VCs slow to deploy after year-end. Good for debt rounds.",color:"#E5B94A"},
+  {quarter:"Q2",score:88,note:"Strongest window. Budget cycles start, new fund vintages deploying, conference season creates momentum.",color:"#1A6E3C"},
+  {quarter:"Q3",score:75,note:"Solid mid-year. Summer slowdown in US/EU but African-focused funds remain active.",color:"#E5B94A"},
+  {quarter:"Q4",score:55,note:"Weakest window. Year-end portfolio reviews, holiday slowdowns, DFI disbursement deadlines create urgency but narrow availability.",color:"#C0392B"},
+];
+
+const RISK_RETURN=[
+  {sector:"AI/DeepTech",irr:42,risk:"Very High",capital:"Low",regulatory:"Low",scale:"Fast",notes:"Highest return potential but earliest stage; most deals are pre-revenue"},
+  {sector:"Defence",irr:38,risk:"Very High",capital:"Medium",regulatory:"High",scale:"Slow",notes:"Emerging sector; Terra Industries $33M signals interest but regulatory barriers significant"},
+  {sector:"Logistics",irr:31,risk:"Medium",capital:"High",regulatory:"Medium",scale:"Medium",notes:"Structural breakout sector; +340% YoY in Q1 2026; asset-heavy but proven models exist"},
+  {sector:"Energy",irr:28,risk:"Low",capital:"Very High",regulatory:"High",scale:"Slow",notes:"Asset-backed, DFI-friendly; SolarAfrica $94M shows scale; long payback but predictable returns"},
+  {sector:"B2B SaaS",irr:26,risk:"Medium",capital:"Low",regulatory:"Low",scale:"Fast",notes:"Capital-efficient but smaller market; Andela $200M is outlier; most rounds under $5M"},
+  {sector:"Fintech",irr:24,risk:"Medium",capital:"Medium",regulatory:"High",scale:"Fast",notes:"Largest sector by capital but maturing; regulatory tightening; OPay/Flutterwave set ceiling"},
+  {sector:"E-Commerce",irr:23,risk:"High",capital:"High",regulatory:"Medium",scale:"Medium",notes:"Working capital intensive; Jumia cautionary tale; Breadfast $50M shows category still active"},
+  {sector:"Healthtech",irr:22,risk:"Medium",capital:"Medium",regulatory:"High",scale:"Slow",notes:"Impact-aligned; regulatory slow; Axmed $10-18M active raise signals DFI appetite"},
+  {sector:"Agritech",irr:19,risk:"High",capital:"Medium",regulatory:"Medium",scale:"Slow",notes:"Weather/FX exposure; seasonal revenue; Sistema.bio $53M shows scale possible with right model"},
+];
+
+/* ─── NARRATIVE GENERATOR ──────────────────────────────── */
+function generateNarrative(sectorF:string,countryF:string,yearRange:number[]):string{
+  const parts:string[]=[];
+  if(sectorF!=="All"){
+    const sh=SECTOR_HIST.find(s=>s.sector===sectorF);
+    if(sh){
+      const y25=(sh as any).y2025||0,y24=(sh as any).y2024||0;
+      const chg=y24>0?Math.round(((y25-y24)/y24)*100):0;
+      parts.push(`${sectorF} raised $${y25}M in 2025${chg!==0?` (${chg>0?"+":""}${chg}% YoY)`:""}.`);
+      const q1=(sh as any).q1_26||0;
+      if(q1>0) parts.push(`Q1 2026 pace: $${q1}M across ${Math.round(q1/10)} estimated deals.`);
+      const rr=RISK_RETURN.find(r=>r.sector===sectorF);
+      if(rr) parts.push(`Risk profile: ${rr.risk}. IRR proxy: ~${rr.irr}%. ${rr.notes}`);
+    }
+  }
+  if(countryF!=="All"){
+    const ch=COUNTRY_HIST.find(c=>c.country===countryF||c.country.startsWith(countryF.slice(0,4)));
+    if(ch){
+      const y25=(ch as any).y2025||0,y24=(ch as any).y2024||0;
+      const chg=y24>0?Math.round(((y25-y24)/y24)*100):0;
+      parts.push(`${ch.country} raised $${y25}M in 2025${chg!==0?` (${chg>0?"+":""}${chg}% YoY)`:""}, with $${ch.q1_26}M in Q1 2026.`);
+    }
+  }
+  if(parts.length===0){
+    const t25=ANNUAL.find(a=>a.year==="2025");
+    const t24=ANNUAL.find(a=>a.year==="2024");
+    if(t25&&t24) parts.push(`African startup funding rebounded to $${t25.total/1000}B in 2025 (+${Math.round(((t25.total-t24.total)/t24.total)*100)}% YoY). Q1 2026 shows $711M with debt at 57% of capital — a historic first.`);
+  }
+  return parts.join(" ");
+}
+
+/* ─── MOMENTUM COMPUTATIONS ────────────────────────────── */
+function computeMomentum(){
+  const q1_26=QUARTERLY.find(q=>q.q==="Q1 '26");
+  const q1_25=QUARTERLY.find(q=>q.q==="Q1 '25");
+  const q4_25=QUARTERLY.find(q=>q.q==="Q4 '25");
+  const yoy=q1_26&&q1_25?Math.round(((q1_26.total-q1_25.total)/q1_25.total)*100):0;
+  const qoq=q1_26&&q4_25?Math.round(((q1_26.total-q4_25.total)/q4_25.total)*100):0;
+  const sectorMomentum=SECTOR_HIST.map(s=>{
+    const chg=s.y2024>0?Math.round(((s.y2025-s.y2024)/s.y2024)*100):0;
+    const q1chg=s.y2025>0?Math.round(((s.q1_26/(s.y2025/4))-1)*100):0;
+    return {sector:s.sector,yoy:chg,q1pace:q1chg,y2025:s.y2025,q1_26:s.q1_26,irr:s.irr};
+  }).sort((a,b)=>b.yoy-a.yoy);
+  return {yoy,qoq,sectorMomentum};
+}
+
+function computeConcentration(){
+  const totalQ1=SECTOR_HIST.reduce((a,s)=>a+s.q1_26,0);
+  const sorted=[...SECTOR_HIST].sort((a,b)=>b.q1_26-a.q1_26);
+  const top3=sorted.slice(0,3).reduce((a,s)=>a+s.q1_26,0);
+  const top3pct=Math.round((top3/totalQ1)*100);
+  const totalCountryQ1=COUNTRY_HIST.reduce((a,c)=>a+c.q1_26,0);
+  const sortedC=[...COUNTRY_HIST].sort((a,b)=>b.q1_26-a.q1_26);
+  const top3C=sortedC.slice(0,3).reduce((a,c)=>a+c.q1_26,0);
+  const top3Cpct=Math.round((top3C/totalCountryQ1)*100);
+  const topDeals=[...ALL_DEALS].filter((d:any)=>d.year===2026).sort((a:any,b:any)=>b.amount-a.amount).slice(0,3);
+  const top3deals=topDeals.reduce((a:number,d:any)=>a+d.amount,0);
+  const top3dpct=Math.round((top3deals/711)*100);
+  return {top3sectors:sorted.slice(0,3).map(s=>s.sector),top3pct,top3countries:sortedC.slice(0,3).map(c=>c.country),top3Cpct,top3dpct,topDeals};
+}
+
+function computeFounderReadiness(sector:string,stage:string,geo:string):{score:number;label:string;color:string;advice:string}{
+  let score=50;
+  const hotSectors=["Logistics","Energy","E-Mobility","Defence"];
+  const warmSectors=["Fintech","B2B SaaS","Healthtech"];
+  if(hotSectors.includes(sector)) score+=20;
+  else if(warmSectors.includes(sector)) score+=10;
+  else score-=5;
+  const earlyStages=["Pre-seed","Seed"];
+  const growthStages=["Series A","Series B"];
+  if(earlyStages.includes(stage)) score+=10;
+  if(growthStages.includes(stage)) score+=15;
+  if(stage==="Growth/C+") score+=5;
+  const hotGeos=["Kenya","Egypt","South Africa"];
+  const warmGeos=["Nigeria","Morocco"];
+  if(hotGeos.includes(geo)) score+=15;
+  else if(warmGeos.includes(geo)) score+=8;
+  else score+=3;
+  const now=new Date();const qtr=Math.ceil((now.getMonth()+1)/3);
+  const timing=RAISE_TIMING.find(r=>r.quarter===`Q${qtr}`);
+  if(timing) score+=Math.round((timing.score-50)/5);
+  score=Math.max(15,Math.min(95,score));
+  let label="",color="",advice="";
+  if(score>=80){label="Strong";color="#1A6E3C";advice="Market conditions are favourable. Your sector and geography align well with active investor appetite. Consider launching your fundraise now.";}
+  else if(score>=60){label="Moderate";color=GD;advice="Conditions are reasonable but not optimal. Strengthen your metrics or consider adjusting your timing to improve conversion rates.";}
+  else{label="Challenging";color="#C0392B";advice="Current market conditions are difficult for your profile. Focus on building traction and metrics before going to market.";}
+  return {score,label,color,advice};
+}
 
 /* ─── ANALYTICS ENGINE ─────────────────────────────────── */
 const Analytics={
